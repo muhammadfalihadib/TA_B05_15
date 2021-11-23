@@ -11,5 +11,5 @@ public interface UserService {
 //    List<UserModel> getListUser();
 //    UserModel getUserById(Long id);
     String encrypt(String password);
-    Boolean isValidPassword(UserModel user, String password);
+    Boolean isValidPassword(String password);
 }
