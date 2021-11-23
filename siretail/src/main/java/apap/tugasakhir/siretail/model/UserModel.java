@@ -30,8 +30,8 @@ public class UserModel {
 
     @NotNull
     @Size(max = 50)
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "nama", nullable = false)
+    private String nama;
 
     @NotNull
     @Lob
