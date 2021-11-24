@@ -39,7 +39,7 @@ public class UserController {
             return "form-add-user";
         }
         userService.addUser(user);
-        model.addAttribute("user", user);
-        return "redirect:/";
+        model.addAttribute("username", user.getUsername());
+        return "add-user";
     }
 }
