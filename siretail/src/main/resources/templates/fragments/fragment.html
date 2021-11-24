@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title> Home </title>
+    <head th:fragment = "css">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    </head>
+    <head th:fragment = "js">
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity = "sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFIBw8HfCJo"
+            crossorigin= "anonymous"
+            ></script>
+            <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+            <script th:src = "@{/js/bootstrap.min.js}"></script>
+    </head>
+</head>
+
+<body>
+    <nav th:fragment="navbar(activeTab)" class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class = "navbar-brand font-weight-bold text-primary" href = "#"> SiRetail </a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span clas="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li th:class="${activeTab == 'home'}? 'font-weight-bold' : null">
+                    <a class="nav-item nav-link active text-secondary" th:href = "@{/}">
+                        Home<span class= "sr-only"></span>
+                    </a>
+                </li>
+                <li th:class="${activeTab == 'cabang'}? 'font-weight-bold' : null">
+                    <a class="nav-item nav-link active text-secondary" th:href = "@{/cabang/viewall}">
+                    Cabang<span class= "sr-only"></span>
+                    </a>
+                </li>
+            </ul>
+            <form class = "form-inline my-2 my-lg-0" th:action = "@{/cabang/view}" method = "GET">
+                <input class = "form-control mr-sm-2" type="search"
+                    name="noCabang" placeholder= "No Cabang" aria-label="Search">
+                <button clas = "btn btn-outline-primary my-2 my-sm-0" type = "submit"> Search </button>
+            </form>
+            <ul class = "navbar-nav pull-right">
+                <a class = "nav-item nav-link active" th:href = "@{/logout}">Logout</a>
+            </ul>
+        </div>
+    </nav>
+</body>
+
+<!-- fragment as base -->
