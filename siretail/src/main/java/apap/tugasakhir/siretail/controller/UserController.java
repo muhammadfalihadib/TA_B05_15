@@ -61,7 +61,6 @@ public class UserController {
             @ModelAttribute UserModel user,
             Model model
     ){
-        user.setPassword(userService.encrypt(user.getPassword()));
         UserModel updatedUser = userService.updateUser(user);
         userService.updateUser(user);
         model.addAttribute("username", updatedUser.getUsername());
