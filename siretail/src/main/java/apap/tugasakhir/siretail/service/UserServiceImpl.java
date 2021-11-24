@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
@@ -54,5 +55,15 @@ public class UserServiceImpl implements UserService {
                 !digitCasePatten.matcher(password).find()
         ) return false;
         return true;
+    }
+
+    @Override
+    public UserModel getUserById(Long id) {
+        Optional<UserModel> user = userDb.findById(id);
+        if (user.isPresent()){
+            return user.get();
+        } else {
+            return null;
+        }
     }
 }

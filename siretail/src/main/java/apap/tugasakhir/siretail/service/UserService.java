@@ -9,7 +9,7 @@ public interface UserService {
     UserModel updateUser(UserModel user);
     void deleteUser(UserModel user);
 //    List<UserModel> getListUser();
-//    UserModel getUserById(Long id);
+    UserModel getUserById(Long id);
     String encrypt(String password);
     Boolean isValidPassword(String password);
 }
