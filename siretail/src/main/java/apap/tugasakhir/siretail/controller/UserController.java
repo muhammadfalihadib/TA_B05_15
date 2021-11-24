@@ -62,7 +62,6 @@ public class UserController {
             Model model
     ){
         UserModel updatedUser = userService.updateUser(user);
-        userService.updateUser(user);
         model.addAttribute("username", updatedUser.getUsername());
         return "update-user";
     }
