@@ -5,7 +5,7 @@ import apap.tugasakhir.siretail.model.UserModel;
 import java.util.List;
 
 public interface UserService {
-    UserModel addUser(UserModel user);
+    void addUser(UserModel user);
     UserModel updateUser(UserModel user);
     void deleteUser(UserModel user);
 //    List<UserModel> getListUser();
