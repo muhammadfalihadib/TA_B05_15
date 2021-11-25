@@ -19,8 +19,8 @@
 </head>
 
 <body>
-    <nav th:fragment="navbar(activeTab)" class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class = "navbar-brand font-weight-bold text-primary" href = "#"> SiRetail </a>
+    <nav th:fragment="navbar(activeTab)" class="navbar navbar-expand-lg" style = "background-color: #caf0f8;">
+        <a class = "navbar-brand font-weight-bold" style = "color: black" href = "/"> SiRetail </a>
         <button
             class="navbar-toggler"
             type="button"
@@ -51,7 +51,7 @@
                 <button clas = "btn btn-outline-primary my-2 my-sm-0" type = "submit"> Search </button>
             </form>
             <ul class = "navbar-nav pull-right">
-                <a class = "nav-item nav-link active" th:href = "@{/logout}">Logout</a>
+                <a class = "nav-item nav-link active" style = "color: red; font-weight: bold;"th:href = "@{/logout}">Logout</a>
             </ul>
         </div>
     </nav>
