@@ -65,4 +65,11 @@ public class UserController {
         model.addAttribute("username", updatedUser.getUsername());
         return "update-user";
     }
+
+    @GetMapping("/viewall")
+    public String listUser(Model model) {
+        List<UserModel> listUser = userService.getListUser();
+        model.addAttribute("listUser", listUser);
+        return "viewall-user";
+    }
 }

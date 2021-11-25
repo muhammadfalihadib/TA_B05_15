@@ -8,7 +8,7 @@ public interface UserService {
     void addUser(UserModel user);
     UserModel updateUser(UserModel user);
     void deleteUser(UserModel user);
-//    List<UserModel> getListUser();
+    List<UserModel> getListUser();
     UserModel getUserById(Long id);
     String encrypt(String password);
     Boolean isValidPassword(String password);

@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -68,4 +69,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
+    @Override
+    public List<UserModel> getListUser() { return userDb.findAll();}
 }
