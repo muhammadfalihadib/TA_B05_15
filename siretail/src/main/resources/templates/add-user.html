@@ -29,7 +29,7 @@
                 <h2 id = "title" th:text="'User ' + ${username} + ' is successfully added!'"></h2>
                 <br><hr>
                 <div style = "text-align:center;">
-                    <a class="btn btn-info" href="@{/user/viewall}">View All User</a>
+                    <a class="btn btn-info" th:href="@{/user/viewall}">View All User</a>
                     <a class="btn btn-outline-info" th:href="@{/user/add}">Add User</a>
                 </div>
             </div>
