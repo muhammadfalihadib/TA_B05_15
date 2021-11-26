@@ -37,6 +37,9 @@ public class UserController {
     ) {
         if (!userService.isValidPassword(user.getPassword())) {
             model.addAttribute("message", "Pengisian password tidak sesuai ketentuan.");
+            model.addAttribute("user", user);
+            List<RoleModel> listRole = roleService.getListRole();
+            model.addAttribute("listRole", listRole);
             return "form-add-user";
         }
         userService.addUser(user);

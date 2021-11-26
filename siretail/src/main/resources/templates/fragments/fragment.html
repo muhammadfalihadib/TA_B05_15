@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta charset="UTF-8">
@@ -33,7 +33,7 @@
             <span clas="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
                 <li th:class="${activeTab == 'home'}? 'font-weight-bold' : null">
                     <a class="nav-item nav-link active text-secondary" th:href = "@{/}">
                         Home<span class= "sr-only"></span>
@@ -45,12 +45,12 @@
                     </a>
                 </li>
             </ul>
-            <form class = "form-inline my-2 my-lg-0" th:action = "@{/cabang/view}" method = "GET">
+            <form class = "form-inline my-2 my-lg-0" th:action = "@{/cabang/view}" method = "GET" sec:authorize="isAuthenticated()">
                 <input class = "form-control mr-sm-2" type="search"
                     name="noCabang" placeholder= "No Cabang" aria-label="Search">
                 <button clas = "btn btn-outline-primary my-2 my-sm-0" type = "submit"> Search </button>
             </form>
-            <ul class = "navbar-nav pull-right">
+            <ul class = "navbar-nav pull-right" sec:authorize="isAuthenticated()">
                 <a class = "nav-item nav-link active" style = "color: red; font-weight: bold;"th:href = "@{/logout}">Logout</a>
             </ul>
         </div>

@@ -25,12 +25,12 @@ public class PageController {
 
     @GetMapping("/")
     public String home(Model model){
-        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // User user = (User) auth.getPrincipal();
-        // String username = user.getUsername();
-        // UserModel userModel = userService.findByUsername(username);
-        // model.addAttribute("user", userModel);
-        return "home";
+         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+         User user = (User) auth.getPrincipal();
+         String username = user.getUsername();
+         UserModel userModel = userService.findByUsername(username);
+         model.addAttribute("user", userModel);
+         return "home";
     }
 
     @RequestMapping("/login")

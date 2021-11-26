@@ -46,7 +46,7 @@
     <nav th:replace= "fragments/fragment :: navbar('home')"></nav>
     <div class = "home">
         <br>
-        <h2 id = "name" th:text = "'Hello <your name> as <your role>!'"></h2>
+        <h2 id = "name" th:text = "'Hello ' + ${user.nama} + ' as ' + ${user.role.nama} + '!'"></h2>
         <h1 id = "title">Welcome to SiRetail</h1>
         <div id = "tombol">
             <a type="button" class="btn btn-outline-info" th:href = "@{/user/add}">Add User</a>
