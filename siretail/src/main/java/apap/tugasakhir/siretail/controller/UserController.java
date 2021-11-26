@@ -5,7 +5,6 @@ import apap.tugasakhir.siretail.model.UserModel;
 import apap.tugasakhir.siretail.service.RoleService;
 import apap.tugasakhir.siretail.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +52,9 @@ public class UserController {
             Model model
     ){
         UserModel user = userService.getUserById(id);
+        if (user.getRole().getNama().equals("Kepala Retail") && userService.hasAuthority("Manager Cabang")) {
+            return "error/403";
+        }
         List<RoleModel> listRole = roleService.getListRole();
         model.addAttribute("user", user);
         model.addAttribute("listRole", listRole);
