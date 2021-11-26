@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset = "UTF-8">
-    <title>500 Internal Server Error</title>
+    <title>403 Method Not Allowed</title>
     <object th:include = "fragments/fragment :: css" th:remove="tag"></object>
     <object th:include = "fragments/fragment :: js" th:remove="tag"></object>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,14 +22,14 @@
     }
 </style>
 <body>
-    <nav th:replace= "fragments/fragment :: navbar('Home')"></nav>
-    <div class="container-fluid">
-        <br>
-        <h2 id = "title">There's something wrong.</h2>
-        <br>
-        <div style = "text-align:center;">
-            <a class="btn btn-info" th:href="@{/}">Back to Home</a>
-        </div>
+<nav th:replace= "fragments/fragment :: navbar('Home')"></nav>
+<div class="container-fluid">
+    <br>
+    <h2 id = "title">You're request not allowed by the server.</h2>
+    <br>
+    <div style = "text-align:center;">
+        <a class="btn btn-info" th:href="@{/}">Back to Home</a>
     </div>
+</div>
 </body>
 </html>
