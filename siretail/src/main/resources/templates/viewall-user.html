@@ -42,10 +42,10 @@
                         <td th:text="${iterationStatus.count}"></td>
                         <td th:text="${user.nama}"></td>
                         <td th:text="${user.role.nama}"></td>
-                        <td sec:authorize="hasAnyRole('Kepala Retail','Manager Cabang')">
+                        <td sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
                             <a class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Update</a>
                         </td>
-                        <td sec:authorize="hasRole('Staff Cabang')">
+                        <td sec:authorize="hasAuthority('Staff Cabang')">
                             <p>-</p>
                         </td>
                     </tr>
