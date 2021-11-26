@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>Add User</title>
     <object th:include = "fragments/fragment :: css" th:remove="tag"></object>
@@ -40,14 +41,25 @@
                     <input type="password" class="form-control" th:field="*{password}"/>
 
                     <label>Role</label>
-                    <select class="form-control" th:field="*{role}">
-                        <option selected value="">--pilih role--</option>
-                        <option th:each="role: ${listRole}"
-                                th:value="${role.id}"
-                                th:text="${role.nama}"
-                                th:selected="${role.id} == ${id}">
-                        </option>>
-                    </select>
+                    <div sec:authorize="hasAuthority('Kepala Retail')">
+                        <select class="form-control" th:field="*{role}">
+                            <option th:each="role: ${listRole}"
+                                    th:value="${role.id}"
+                                    th:text="${role.nama}"
+                                    th:selected="${role.id} == ${id}">
+                            </option>
+                        </select>
+                    </div>
+                    <div sec:authorize="hasAnyAuthority('Manager Cabang', 'Staff Cabang')">
+                        <input type="hidden" th:field="*{role}">
+                        <select class="form-control" th:field="*{role}" disabled>
+                            <option th:each="role: ${listRole}"
+                                    th:value="${role.id}"
+                                    th:text="${role.nama}"
+                                    th:selected="${role.id} == ${id}">
+                            </option>
+                        </select>
+                    </div>
                     <br>
                     <div th:unless="${message} == null">
                         <div class="text-danger" th:text="${message}"></div>
