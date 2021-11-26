@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Login</title>
+    <object th:include = "fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include = "fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit&family=Ubuntu&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+        background-color: #edf6f9;
+        font-family: 'Outfit', sans-serif;
+    }
+    #title {
+        font-size: 35px;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+<body>
+<nav th:replace= "fragments/fragment :: navbar('home')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2 id = "title">Login</h2>
+                <div th:if="${param.error}">
+                    <span style="color: red">Username atau password salah</span>
+                </div>
+                <form th:action="@{/login}" method="POST">
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control"/>
+                    <br>
+                    <label>Password</Label>
+                    <input type="password" name="password" class="form-control"/>
+                    <br>
+                    <button type="submit" class="btn btn-info">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
