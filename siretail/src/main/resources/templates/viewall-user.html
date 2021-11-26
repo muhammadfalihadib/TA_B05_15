@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>Add User</title>
     <object th:include = "fragments/fragment :: css" th:remove="tag"></object>
@@ -42,8 +43,12 @@
                         <td th:text="${iterationStatus.count}"></td>
                         <td th:text="${user.nama}"></td>
                         <td th:text="${user.role.nama}"></td>
-                        <td sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
+                        <td sec:authorize="hasAuthority('Kepala Retail')">
                             <a class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Update</a>
+                        </td>
+                        <td sec:authorize="hasAuthority('Manager Cabang')">
+                            <a th:if="${user.role.nama} != 'Kepala Retail'" class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Update</a>
+                            <p th:if="${user.role.nama} == 'Kepala Retail'">-</p>
                         </td>
                         <td sec:authorize="hasAuthority('Staff Cabang')">
                             <p>-</p>
