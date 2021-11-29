@@ -21,10 +21,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-        UserModel user = userDb.findByUsername(username);
+        UserModel userModel = userDb.findByUsername(username);
         Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
-        grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().getNama()));
-        return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
+        grantedAuthorities.add(new SimpleGrantedAuthority(userModel.getRole().getNama()));
+        return new User(userModel.getUsername(), userModel.getPassword(), grantedAuthorities);
     }
 
 }

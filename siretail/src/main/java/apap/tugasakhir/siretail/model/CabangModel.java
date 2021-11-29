@@ -11,43 +11,43 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name = "user")
-public class UserModel {
+@Table(name = "cabang")
+public class CabangModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull
-    @Size(max = 50)
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
-
-    @NotNull
-    @Size(max = 50)
+    @Size(max = 30)
     @Column(name = "nama", nullable = false)
     private String nama;
 
     @NotNull
-    @Lob
-    @Size(max = 200)
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Size(max = 100)
+    @Column(name = "alamat", nullable = false)
+    private String alamat;
+
+    @NotNull
+    @Column(name = "ukuran", nullable = false)
+    private Integer ukuran;
+
+    @Column(name = "status", nullable = false)
+    private Integer status;
+
+    @NotNull
+    @Size(max = 20)
+    @Column(name = "no_telp", nullable = false)
+    private String noTelp;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private RoleModel role;
-
-    @OneToMany(mappedBy = "penanggungJawab", fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private List<CabangModel> listCabang;
+    private UserModel penanggungJawab;
 }
