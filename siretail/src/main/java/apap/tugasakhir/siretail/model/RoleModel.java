@@ -22,10 +22,10 @@ import java.util.List;
 public class RoleModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @NotNull
-    @Size(max = 50)
+    @Size(max = 100)
     @Column(name = "nama", nullable = false)
     private String nama;
 

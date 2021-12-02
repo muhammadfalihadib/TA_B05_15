@@ -48,7 +48,7 @@ public class UserController {
 
     @GetMapping("/update/{id}")
     public String updateUserFormPage(
-            @PathVariable Long id,
+            @PathVariable Integer id,
             Model model
     ){
         UserModel user = userService.getUserById(id);
