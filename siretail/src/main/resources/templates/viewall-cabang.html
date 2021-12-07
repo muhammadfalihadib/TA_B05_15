@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>View All Cabang</title>
+    <object th:include = "fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include = "fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit&family=Ubuntu&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+        background-color: #edf6f9;
+        font-family: 'Outfit', sans-serif;
+    }
+    #title {
+        font-size: 35px;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        text-align: center;
+    }
+    #title2 {
+        font-size: 28px;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    #noItem {
+        font-size: 25px;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        text-align: center;
+    }
+</style>
+<body>
+    <nav th:replace= "fragments/fragment :: navbar('agensi')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                    <h2 id = "title">Daftar Cabang </h2>
+                    <div th:if = "*{listCabang.size() != 0}">
+                            <table class = "table">
+                                <thead>
+                                    <tr>
+                                        <th> Nomor </th>
+                                        <th> Id Cabang </th>
+                                        <th> Nama Cabang </th>
+                                        <th> Nomor Telepon </th>
+                                        <th> Ukuran Cabang </th>
+                                        <th> Jumlah Item </th>
+                                        <th> Status Cabang </th>
+                                        <th> Detail Cabang </th>
+                                        <!-- <th> Update Cabang </th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each = "cabang, iterationStatus : ${listCabang}"
+                                        th:style = "${iterationStatus.even} ? 'font-weight: bold;'">
+                                        <td th:text = "${iterationStatus.count}"></td>
+                                        <td th:text = "${cabang.id}"></td>
+                                        <td th:text = "${cabang.nama}"></td>
+                                        <td th:text = "${cabang.noTelp}"></td>
+                                        <td th:text = "${cabang.ukuran}"></td>
+                                        <td th:text = "${cabang.listItemCabang}"></td>
+                                        <td th:text = "${cabang.status}"></td>
+                                        <td>
+                                            <a class="btn btn-sm btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Detail</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+    
+                    <div th:unless="*{listCabang.size() != 0}">
+                        <h2 th:text = "'There is no Cabang yet.'"></h2>
+                    </div>
+                    <hr>
+                </div>
+                <br>
+                <a class="btn btn-info" href="/">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

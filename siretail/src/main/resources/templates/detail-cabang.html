@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Detail Cabang</title>
+    <object th:include = "fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include = "fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit&family=Ubuntu&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+        background-color: #edf6f9;
+        font-family: 'Outfit', sans-serif;
+    }
+    #title {
+        font-size: 35px;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        text-align: center;
+    }
+    #title2 {
+        font-size: 28px;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    #noItem {
+        font-size: 25px;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        text-align: center;
+    }
+</style>
+<body>
+<nav th:replace= "fragments/fragment :: navbar('cabang')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <div class="col">
+                    <h2 id = "title">Detail Cabang</h2>
+                    <br>
+                    <p th:text="'Id Cabang    : ' + ${cabang.id}"></p>
+                    <p th:text="'Nama Cabang  : ' + ${cabang.nama}"></p>
+                    <p th:text="'Alamat Cabang : ' + ${cabang.alamat}"></p>
+                    <p th:text="'Ukuran Cabang : ' + ${cabang.ukuran}"></p>
+                    <p th:text="'Status Cabang : ' + ${cabang.status}"></p>
+                    <p th:text="'Nomor Telepon : ' + ${cabang.noTelp}"></p>
+                    <p th:text="'Penanggung Jawab Cabang : ' + ${cabang.penanggungJawab.nama}"></p>
+                </div>
+                <div class="col">
+                    <br>
+                    <h4 id = "title2">List Item Cabang: </h4>
+                    <a class="btn btn-info" th:href="@{/item-cabang/add/} + ${cabang.id}">Add Item</a>
+                    <div th:if = "*{listItemCabang.size() != 0}">
+                        <form th:action = "@{/item-cabang/delete}" th:object = "${cabang}" method = "POST">
+                            <input type="hidden" th:field="*{id}">
+                            <table class = "table">
+                                <thead>
+                                    <tr>
+                                        <th> Nama Item </th>
+                                        <th> Harga </th>
+                                        <th> Promo </th>
+                                        <th> Hapus </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each = "itemCabang, iterationStatus : ${listItemCabang}"
+                                        th:style = "${iterationStatus.even} ? 'font-weight: bold;'">
+                                        <td th:text = "${iterationStatus.count}"></td>
+                                        <td th:text = "${itemCabang.nama}"></td>
+                                        <td th:text = "${itemCabang.harga}"></td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" th:href="@{/item-cabang/promo/} + ${cabang.id} + @{/item-cabang/} + ${itemCabang.id}">Terapkan Promo</a>
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input" type="checkbox" th:field="*{listItemCabang}"
+                                            th:value = "${itemCabang.id}" id = "flexCheckDefault">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <input type="submit" value="Delete selected item" class= "btn btn-danger">
+                        </form>
+                    </div>
+    
+                    <div th:unless="*{listItemCabang.size() != 0}">
+                        <h6 id = "noItem" th:text = "'There is no item here'"></h6>
+                    </div>
+                    <hr>
+                </div>
+                <br>
+                <a class="btn btn-outline-info" href="/cabang/viewall">Back to Daftar Cabang</a>
+                <a class="btn btn-info" href="/cabang/update">Update Cabang</a>
+                <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}">Delete Cabang</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -30,5 +31,10 @@ public class CabangServiceImpl implements CabangService {
         Optional<CabangModel> cabang = cabangDb.findById(id);
         if(cabang.isPresent()) return cabang.get();
         else return null;
+    }
+
+    @Override
+    public List<CabangModel> getListCabang(){
+        return cabangDb.findAll();
     }
 }

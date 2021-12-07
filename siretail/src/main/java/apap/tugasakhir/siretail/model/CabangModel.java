@@ -12,13 +12,22 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
 @Table(name = "cabang")
-public class CabangModel {
+
+@JsonIgnoreProperties(value={"listItemCabang"}, allowSetters = true)
+public class CabangModel implements Serializable{
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -45,9 +54,17 @@ public class CabangModel {
     @Column(name = "no_telp", nullable = false)
     private String noTelp;
 
+    // Relasi dengan UserModel
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private UserModel penanggungJawab;
+
+    // Relasi dengan ItemCabangModel
+    @OneToMany(mappedBy = "cabang", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private List<ItemCabangModel> listItemCabang;
+
 }
