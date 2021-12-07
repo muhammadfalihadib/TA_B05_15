@@ -66,7 +66,7 @@
                                         <td th:text = "${cabang.listItemCabang}"></td>
                                         <td th:text = "${cabang.status}"></td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" th:href="@{/cabang/view/(${cabang.id})}">Detail</a>
+                                            <a class="btn btn-sm btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Detail</a>
                                         </td>
                                     </tr>
                                 </tbody>
