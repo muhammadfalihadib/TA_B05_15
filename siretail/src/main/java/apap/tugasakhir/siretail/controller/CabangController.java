@@ -51,6 +51,20 @@ public class CabangController {
         return "update-cabang";
     }
 
+    @GetMapping("/view")
+    public String viewDetailAgensiPage(
+        @RequestParam(value = "id", required = false) Integer id,
+        Model model
+    ){
+
+        CabangModel cabang = cabangService.getCabangById(id);
+        if (cabang == null || id == null){
+            return "no-cabang";
+        }
+        model.addAttribute("cabang", cabang);
+        return "view-cabang";
+
+    }
 
     public UserModel findCurrUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
