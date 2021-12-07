@@ -2,6 +2,7 @@ package apap.tugasakhir.siretail.controller;
 
 import apap.tugasakhir.siretail.model.CabangModel;
 import apap.tugasakhir.siretail.model.UserModel;
+import apap.tugasakhir.siretail.model.ItemCabangModel;
 import apap.tugasakhir.siretail.service.CabangService;
 import apap.tugasakhir.siretail.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/cabang")
@@ -51,9 +54,9 @@ public class CabangController {
         return "update-cabang";
     }
 
-    @GetMapping("/view")
-    public String viewDetailAgensiPage(
-        @RequestParam(value = "id", required = false) Integer id,
+    @GetMapping("/view/{id}")
+    public String viewDetailCabangPage(
+        @PathVariable Integer id,
         Model model
     ){
 
@@ -61,8 +64,11 @@ public class CabangController {
         if (cabang == null || id == null){
             return "no-cabang";
         }
+        List<ItemCabangModel> listItemCabang = cabang.getListItemCabang();
+        
         model.addAttribute("cabang", cabang);
-        return "view-cabang";
+        model.addAttribute("listItemCabang", listItemCabang);
+        return "detail-cabang";
 
     }
 
