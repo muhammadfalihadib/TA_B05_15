@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -18,5 +19,10 @@ public class CabangRestServiceImpl implements CabangRestService {
     @Override
     public CabangModel saveCabang(CabangModel cabang){
         return cabangDb.save(cabang);
+    };
+
+    @Override
+    public List<CabangModel> getAllCabang(){
+        return cabangDb.findAll();
     };
 }
