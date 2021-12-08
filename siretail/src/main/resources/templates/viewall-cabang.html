@@ -63,7 +63,7 @@
                                         <td th:text = "${cabang.nama}"></td>
                                         <td th:text = "${cabang.noTelp}"></td>
                                         <td th:text = "${cabang.ukuran}"></td>
-                                        <td th:text = "${cabang.listItemCabang}"></td>
+                                        <td th:text = "${cabang.listItemCabang.size()}"></td>
                                         <td th:text = "${cabang.status}"></td>
                                         <td>
                                             <a class="btn btn-sm btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Detail</a>

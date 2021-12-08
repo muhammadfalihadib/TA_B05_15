@@ -53,13 +53,14 @@
                 <div class="col">
                     <br>
                     <h4 id = "title2">List Item Cabang: </h4>
-                    <a class="btn btn-info" th:href="@{/item-cabang/add/} + ${cabang.id}">Add Item</a>
+                    <a class="btn btn-info" th:href="@{/item/add/} + ${cabang.id}">Add Item</a>
                     <div th:if = "*{listItemCabang.size() != 0}">
                         <form th:action = "@{/item-cabang/delete}" th:object = "${cabang}" method = "POST">
                             <input type="hidden" th:field="*{id}">
                             <table class = "table">
                                 <thead>
                                     <tr>
+                                        <th> No </th>
                                         <th> Nama Item </th>
                                         <th> Harga </th>
                                         <th> Promo </th>
@@ -92,8 +93,8 @@
                     <hr>
                 </div>
                 <br>
-                <a class="btn btn-outline-info" href="/cabang/viewall">Back to Daftar Cabang</a>
-                <a class="btn btn-info" href="/cabang/update">Update Cabang</a>
+                <a class="btn btn-info" href="/cabang/viewall">Back to Daftar Cabang</a>
+                <a class="btn btn-outline-info" href="/cabang/update">Update Cabang</a>
                 <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}">Delete Cabang</a>
             </div>
         </div>
