@@ -29,8 +29,8 @@
                 <h2 id = "title" th:text="'Item ' + ${nama} + ' is successfully added!'"></h2>
                 <br><hr>
                 <div style = "text-align:center;">
+                    <a class="btn btn-outline-info" th:href="@{/cabang/view/} + ${cabang.id}">Back to Detail Cabang</a>
                     <a class="btn btn-info" th:href="@{/cabang/viewall}">View All Cabang</a>
-                    <a class="btn btn-outline-info" th:href="@{/cabang/add}">Add Another Cabang</a>
                 </div>
             </div>
         </div>
