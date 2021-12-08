@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -24,6 +25,7 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
     @Autowired
     ItemCabangDb itemCabangDb;
     private final WebClient webClient;
+    private final WebClient webClientCoupon;
 
     @Override
     public ItemCabangModel createItemCabang(ItemCabangModel itemCabang){
@@ -61,8 +63,19 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
         return this.webClient.get().uri("/api/item/" + uuid).retrieve().bodyToMono(String.class);
     }
 
+    public List<HashMap> getAllPromo() {
+        HashMap<String, Object> x =  this.webClientCoupon.get().uri("/rest/coupon").retrieve().bodyToMono(HashMap.class).block();
+        List<HashMap> items = (List<HashMap>) x.get("result");
+
+        return items;
+    }
+    public ItemCabangModel updateItemCabang(ItemCabangModel itemCabang) {
+        return itemCabangDb.save(itemCabang);
+    }
+
     public ItemCabangRestServiceImpl(WebClient.Builder webClientBuilder){
         this.webClient = webClientBuilder.baseUrl(Setting.itemCabangUrl).build();
+        this.webClientCoupon = webClientBuilder.baseUrl(Setting.couponUrl).build();
     }
 }
 

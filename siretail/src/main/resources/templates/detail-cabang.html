@@ -73,8 +73,8 @@
                                         <td th:text = "${iterationStatus.count}"></td>
                                         <td th:text = "${itemCabang.nama}"></td>
                                         <td th:text = "${itemCabang.harga}"></td>
-                                        <td>
-                                            <a class="btn btn-sm btn-primary" th:href="@{/item-cabang/promo/} + ${cabang.id} + @{/item-cabang/} + ${itemCabang.id}">Terapkan Promo</a>
+                                        <td sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
+                                            <a th:if = "${itemCabang.idPromo == null}" class="btn btn-sm btn-primary" th:href="@{/item/promo/} + ${cabang.id} + @{/} + ${itemCabang.id}">Terapkan Promo</a>
                                         </td>
                                         <td>
                                             <input class="form-check-input" type="checkbox" th:field="*{listItemCabang}"

@@ -5,6 +5,7 @@ import apap.tugasakhir.siretail.rest.ItemDetail;
 import apap.tugasakhir.siretail.rest.ResultDetail;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ItemCabangRestService {
@@ -13,4 +14,6 @@ public interface ItemCabangRestService {
     ItemCabangModel getItemCabangById(Integer id);
     ItemDetail getAllItemCabang();
     Mono<String> getStokItem(String uuid);
+    List<HashMap> getAllPromo();
+    ItemCabangModel updateItemCabang(ItemCabangModel itemCabang);
 }

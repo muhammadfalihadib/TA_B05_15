@@ -70,4 +70,29 @@ public class ItemCabangController {
         return "add-item";
     }
 
+    @GetMapping(value = "/promo/{idCabang}/{id}")
+    public String addPromoFormPage(@PathVariable("idCabang") String idCabang,
+                                   @PathVariable("id") String id,
+                                   Model model){
+        List<HashMap> listCoupon = itemCabangRestService.getAllPromo();
+        model.addAttribute("idCabang", idCabang);
+        model.addAttribute("id", id);
+        model.addAttribute("listCoupon", listCoupon);
+        return  "list-coupon";
+    }
+
+    @RequestMapping(value = "/promo")
+    public String addPromo(@RequestParam("id") String id,
+                           @RequestParam("idCabang") String idCabang,
+                           @RequestParam("idPromo") String idPromo,
+                           @RequestParam("discount") String discount,
+                           Model model){
+        ItemCabangModel item = itemCabangRestService.getItemCabangById(Integer.parseInt(id));
+        item.setIdPromo(Integer.parseInt(idPromo));
+        float harga = item.getHarga()*((100 - Float.parseFloat(discount))/100);
+        item.setHarga((int) harga);
+        itemCabangRestService.updateItemCabang(item);
+        return "redirect:/cabang/view/"+idCabang;
+    }
+
 }
