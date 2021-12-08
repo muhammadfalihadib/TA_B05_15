@@ -2,6 +2,7 @@ package apap.tugasakhir.siretail.service;
 
 import apap.tugasakhir.siretail.model.ItemCabangModel;
 import apap.tugasakhir.siretail.repository.ItemCabangDb;
+import apap.tugasakhir.siretail.rest.ItemDetail;
 import apap.tugasakhir.siretail.rest.ResultDetail;
 import apap.tugasakhir.siretail.rest.Setting;
 import reactor.core.publisher.Mono;
@@ -47,8 +48,12 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
     }
 
     @Override
-    public Mono<List<ItemCabangModel>> getAllItemCabang(){
-        return this.webClient.get().uri("/api/item").retrieve().bodyToMono(new ParameterizedTypeReference<List<ItemCabangModel>>(){});
+    public ItemDetail getAllItemCabang(){
+        return this.webClient.get().uri("/api/item")
+        .retrieve()
+        .bodyToMono(ItemDetail.class)
+        .block();
+        //.getResult();
     }
 
     @Override

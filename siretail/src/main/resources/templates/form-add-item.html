@@ -27,18 +27,26 @@
         <div class="card-body">
             <div class="justify-content-center">
                 <h2 id = "title">Add Item</h2>
-                <form th:action="@{/item/add}" th:object="${item}" method="POST">
+                <div th:if="${error}">
+                    <span style="color: red">Stok tidak cukup!</span>
+                </div>
+                <form th:action="@{/item/add}" th:object="${itemCabang}" method="POST">
+                    <input type="hidden" th:field="*{kategori}" />
+                    <input type="hidden" th:field="*{harga}" />
+                    <input type="hidden" th:field="*{nama}" />
+                    <input type="hidden" th:field="*{cabang}" />
                     <label>Nama Item</label>
-                    <select name="role" class="form-control">
+                    <select th:field="*{uuidItem}" class="form-control">
                         <option selected value="">-- Choose Item --</option>
                         <option th:each="item: ${listItem}"
-                                th:value="${item.id}"
+                                th:value="${item.uuid}"
                                 th:text="${item.nama}">
                         </option>>
                     </select>
                     <br>
                     <label>Jumlah Item</label>
-                    <input type="text" name="kuantitas" class="form-control"/>
+                    <input type="number" th:field="*{stok}" class="form-control"/>
+                    <br>
                     <button type="submit" class="btn btn-info">Save</button>
                     <a class="btn btn-info" href="/">Home</a>
                 </form>

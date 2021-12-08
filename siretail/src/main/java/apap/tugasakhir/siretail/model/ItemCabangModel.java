@@ -42,7 +42,6 @@ public class ItemCabangModel implements Serializable {
     private String nama;
 
     @NotNull
-    @Size
     @Column(name = "harga", nullable = false)
     private Integer harga;
 
@@ -55,8 +54,7 @@ public class ItemCabangModel implements Serializable {
     @Column(name = "kategori", nullable = false)
     private String kategori;
 
-    @NotNull
-    @Column(name = "id_promo", nullable = false)
+    @Column(name = "id_promo")
     private Integer idPromo;
 
     // Relasi dengan CabangModel
