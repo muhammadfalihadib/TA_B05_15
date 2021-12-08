@@ -65,6 +65,7 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
 
     public List<HashMap> getAllPromo() {
         HashMap<String, Object> x =  this.webClientCoupon.get().uri("/rest/coupon").retrieve().bodyToMono(HashMap.class).block();
+        if (x == null) return null;
         List<HashMap> items = (List<HashMap>) x.get("result");
 
         return items;
