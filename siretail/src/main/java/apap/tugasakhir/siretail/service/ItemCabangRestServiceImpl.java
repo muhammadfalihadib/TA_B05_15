@@ -2,6 +2,7 @@ package apap.tugasakhir.siretail.service;
 
 import apap.tugasakhir.siretail.model.ItemCabangModel;
 import apap.tugasakhir.siretail.repository.ItemCabangDb;
+import apap.tugasakhir.siretail.rest.CouponDetail;
 import apap.tugasakhir.siretail.rest.ItemDetail;
 import apap.tugasakhir.siretail.rest.ResultDetail;
 import apap.tugasakhir.siretail.rest.Setting;
@@ -63,12 +64,13 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
         return this.webClient.get().uri("/api/item/" + uuid).retrieve().bodyToMono(String.class);
     }
 
-    public List<HashMap> getAllPromo() {
-        HashMap<String, Object> x =  this.webClientCoupon.get().uri("/rest/coupon").retrieve().bodyToMono(HashMap.class).block();
-        List<HashMap> items = (List<HashMap>) x.get("result");
 
-        return items;
+    @Override
+    public CouponDetail getAllPromo() {
+        return this.webClientCoupon.get().uri("/rest/coupon").retrieve().bodyToMono(CouponDetail.class).block();
     }
+
+
     public ItemCabangModel updateItemCabang(ItemCabangModel itemCabang) {
         return itemCabangDb.save(itemCabang);
     }

@@ -2,6 +2,8 @@ package apap.tugasakhir.siretail.controller;
 
 import apap.tugasakhir.siretail.model.ItemCabangModel;
 import apap.tugasakhir.siretail.model.CabangModel;
+import apap.tugasakhir.siretail.rest.CouponDetail;
+import apap.tugasakhir.siretail.rest.ResultCouponDetail;
 import apap.tugasakhir.siretail.rest.ResultDetail;
 import apap.tugasakhir.siretail.service.ItemCabangService;
 import apap.tugasakhir.siretail.service.CabangService;
@@ -74,7 +76,7 @@ public class ItemCabangController {
     public String addPromoFormPage(@PathVariable("idCabang") String idCabang,
                                    @PathVariable("id") String id,
                                    Model model){
-        List<HashMap> listCoupon = itemCabangRestService.getAllPromo();
+        List<ResultCouponDetail> listCoupon = itemCabangRestService.getAllPromo().getResult();
         model.addAttribute("idCabang", idCabang);
         model.addAttribute("id", id);
         model.addAttribute("listCoupon", listCoupon);
@@ -82,16 +84,17 @@ public class ItemCabangController {
     }
 
     @RequestMapping(value = "/promo")
-    public String addPromo(@RequestParam("id") String id,
-                           @RequestParam("idCabang") String idCabang,
-                           @RequestParam("idPromo") String idPromo,
-                           @RequestParam("discount") String discount,
+    public String addPromo(@RequestParam("id") int id,
+                           @RequestParam("idCabang") int idCabang,
+                           @RequestParam("idPromo") int idPromo,
+                           @RequestParam("discount") float discount,
                            Model model){
-        ItemCabangModel item = itemCabangRestService.getItemCabangById(Integer.parseInt(id));
-        item.setIdPromo(Integer.parseInt(idPromo));
-        float harga = item.getHarga()*((100 - Float.parseFloat(discount))/100);
+        ItemCabangModel item = itemCabangRestService.getItemCabangById(id);
+        item.setIdPromo(idPromo);
+        float harga = item.getHarga()*((100 - discount)/100);
         item.setHarga((int) harga);
         itemCabangRestService.updateItemCabang(item);
+
         return "redirect:/cabang/view/"+idCabang;
     }
 

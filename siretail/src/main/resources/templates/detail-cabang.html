@@ -63,7 +63,7 @@
                                         <th> No </th>
                                         <th> Nama Item </th>
                                         <th> Harga </th>
-                                        <th> Promo </th>
+                                        <th sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')"> Promo </th>
                                         <th> Hapus </th>
                                     </tr>
                                 </thead>

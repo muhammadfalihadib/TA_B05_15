@@ -1,6 +1,7 @@
 package apap.tugasakhir.siretail.service;
 
 import apap.tugasakhir.siretail.model.ItemCabangModel;
+import apap.tugasakhir.siretail.rest.CouponDetail;
 import apap.tugasakhir.siretail.rest.ItemDetail;
 import apap.tugasakhir.siretail.rest.ResultDetail;
 import reactor.core.publisher.Mono;
@@ -14,6 +15,6 @@ public interface ItemCabangRestService {
     ItemCabangModel getItemCabangById(Integer id);
     ItemDetail getAllItemCabang();
     Mono<String> getStokItem(String uuid);
-    List<HashMap> getAllPromo();
+    CouponDetail getAllPromo();
     ItemCabangModel updateItemCabang(ItemCabangModel itemCabang);
 }
