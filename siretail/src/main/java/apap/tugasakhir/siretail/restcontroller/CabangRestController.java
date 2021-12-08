@@ -1,6 +1,7 @@
 package apap.tugasakhir.siretail.restcontroller;
 
 import apap.tugasakhir.siretail.model.CabangModel;
+import apap.tugasakhir.siretail.rest.BaseResponse;
 import apap.tugasakhir.siretail.service.CabangRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,11 @@ public class CabangRestController {
     }
 
     @GetMapping(value = "/cabang")
-    private List<CabangModel> getAllCabang(){
-        return cabangRestService.getAllCabang();
+    private BaseResponse<List<CabangModel>> getAllCabang(){
+        BaseResponse<List<CabangModel>> response = new BaseResponse<>();
+        response.setStatus(200);
+        response.setMessage("success");
+        response.setResult(cabangRestService.getAllCabang());
+        return response;
     }
 }
