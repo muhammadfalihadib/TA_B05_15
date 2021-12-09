@@ -51,6 +51,7 @@ public class ItemCabangController {
         @ModelAttribute ItemCabangModel itemCabang,
         Model model
     ){
+        arrResult = itemCabangRestService.getAllItemCabang().getResult();
         Map<String, ResultDetail> mapItem = new HashMap<String, ResultDetail>();
         for (ResultDetail i: arrResult){
             mapItem.put(i.getUuid(), i);
