@@ -18,6 +18,7 @@
         font-family: 'Ubuntu', sans-serif;
         font-weight: bold;
         text-align: center;
+        padding-bottom: 10px;
     }
     #title2 {
         font-size: 28px;
@@ -34,12 +35,16 @@
     }
 </style>
 <body>
-    <nav th:replace= "fragments/fragment :: navbar('agensi')"></nav>
+    <nav th:replace= "fragments/fragment :: navbar('cabang')"></nav>
 <div class="container">
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
                     <h2 id = "title">Daftar Cabang </h2>
+                    <!-- <td sec:authorize="hasAuthority('Manager Cabang')">
+                        <a th:if="${user.role.nama} != 'Kepala Retail'" class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Update</a>
+                        <p th:if="${user.role.nama} == 'Kepala Retail'">-</p>
+                    </td> -->
                     <div th:if = "*{listCabang.size() != 0}">
                             <table class = "table">
                                 <thead>
@@ -64,7 +69,9 @@
                                         <td th:text = "${cabang.noTelp}"></td>
                                         <td th:text = "${cabang.ukuran}"></td>
                                         <td th:text = "${cabang.listItemCabang.size()}"></td>
-                                        <td th:text = "${cabang.status}"></td>
+                                        <td th:if = "${cabang.status} == 0"> Menunggu Persetujuan </td>
+                                        <td th:if = "${cabang.status} == 1"> Ditolak </td>
+                                        <td th:if = "${cabang.status} == 2"> Disetujui </td>
                                         <td>
                                             <a class="btn btn-sm btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Detail</a>
                                         </td>
@@ -80,7 +87,10 @@
                     <hr>
                 </div>
                 <br>
-                <a class="btn btn-info" href="/">Back to Home</a>
+                <div style = "text-align: center;">
+                    <a class="btn btn-info" th:href="@{/cabang/add}">Add Cabang</a>
+                    <a class="btn btn-outline-info" href="/">Back to Home</a>
+                </div>
             </div>
         </div>
     </div>
