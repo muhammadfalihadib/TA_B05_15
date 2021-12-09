@@ -31,7 +31,7 @@
                     <span style="color: red" th:text = "${error}"></span>
                 </div>
                 <form th:action="@{/item/add/} + ${cabangId}" th:object="${listResultDetail}" method="POST">
-                    <label>Nama Item</label>
+                    <label>Add Item</label>
                     <br>
                     <button class="btn btn-primary" name="addRow">Tambah Row</button>
                     <br>
@@ -51,9 +51,6 @@
                         </td>
                     </tr>
                     <br>
-<!--                    <label>Jumlah Item</label>-->
-<!--                    <input type="number" th:field="*{stok}" class="form-control"/>-->
-<!--                    <br>-->
                     <button type="submit" class="btn btn-info">Save</button>
                     <a class="btn btn-info" href="/">Home</a>
                     
