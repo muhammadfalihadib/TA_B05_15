@@ -39,9 +39,19 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
     }
 
     @Override
+    public ItemCabangModel getItemCabangByUuid(String uuidItem){
+        Optional<ItemCabangModel> itemCabang = itemCabangDb.findByUuidItem(uuidItem);
+        if (itemCabang.isPresent()){
+            return itemCabang.get();
+        }
+        else{
+            throw new NoSuchElementException();
+        }
+    }
+
+    @Override
     public ItemCabangModel getItemCabangById(Integer id){
         Optional<ItemCabangModel> itemCabang = itemCabangDb.findById(id);
-        
         if (itemCabang.isPresent()){
             return itemCabang.get();
         }
