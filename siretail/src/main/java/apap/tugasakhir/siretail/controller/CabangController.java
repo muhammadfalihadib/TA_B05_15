@@ -26,6 +26,13 @@ public class CabangController {
     @Autowired
     private UserService userService;
 
+    public UserModel findCurrUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        return userService.findByUsername(username);
+    }
+
     @GetMapping("/add")
     public String addCabangFormPage(Model model){
         CabangModel cabang = new CabangModel();
@@ -80,11 +87,19 @@ public class CabangController {
         return "viewall-cabang";
     }
 
-    public UserModel findCurrUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) auth.getPrincipal();
-        String username = user.getUsername();
-        return userService.findByUsername(username);
+    @GetMapping("delete/{id}")
+    public String deleteCabang(
+            Model model,
+            @PathVariable Integer id
+    ){
+        CabangModel cabang = cabangService.getCabangById(id);
+        model.addAttribute("cabang", cabang);
+        List<ItemCabangModel> listItem = cabang.getListItemCabang();
+        if (listItem.size() > 0){
+            return "delete-cabang-fail";
+        }
+        cabangService.deleteCabang(id);
+        return "delete-cabang";
     }
 
 }
