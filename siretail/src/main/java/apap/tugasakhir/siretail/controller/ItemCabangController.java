@@ -58,7 +58,13 @@ public class ItemCabangController {
         if (itemCabang.getStok() > mapItem.get(itemCabang.getUuidItem()).getStok()){
             model.addAttribute("itemCabang", itemCabang);
             model.addAttribute("listItem", arrResult);
-            model.addAttribute("error", 1);
+            model.addAttribute("error", "Stok tidak cukup");
+            return "form-add-item";
+        }
+        else if (itemCabang.getStok() <= 0){
+            model.addAttribute("itemCabang", itemCabang);
+            model.addAttribute("listItem", arrResult);
+            model.addAttribute("error", "Input stok harus lebih dari 0");
             return "form-add-item";
         }
         else{
@@ -67,18 +73,25 @@ public class ItemCabangController {
                 System.out.println("masuk udh ada");
                 itemExist.setStok(itemCabang.getStok() + itemExist.getStok());
                 itemCabangRestService.createItemCabang(itemExist);
+
+                Integer stok = mapItem.get(itemCabang.getUuidItem()).getStok() - itemCabang.getStok();
+                itemCabangRestService.updateStok(itemExist.getUuidItem(), stok);
+                
                 model.addAttribute("nama", itemExist.getNama());
                 model.addAttribute("cabang", itemExist.getCabang());
                 return "add-item";
             }
             catch (NoSuchElementException e){
-                // System.out.println(itemCabangRestService.getItemCabangByUuid(itemCabang.getUuidItem()));
                 System.out.println("masuk belom ada");
                 itemCabang.setNama(mapItem.get(itemCabang.getUuidItem()).getNama());
                 itemCabang.setKategori(mapItem.get(itemCabang.getUuidItem()).getKategori());
                 itemCabang.setHarga(mapItem.get(itemCabang.getUuidItem()).getHarga());
         
                 itemCabangRestService.createItemCabang(itemCabang);
+
+                Integer stok = mapItem.get(itemCabang.getUuidItem()).getStok() - itemCabang.getStok();
+                itemCabangRestService.updateStok(itemCabang.getUuidItem(), stok);
+
                 model.addAttribute("nama", itemCabang.getNama());
                 model.addAttribute("cabang", itemCabang.getCabang());
                 return "add-item";

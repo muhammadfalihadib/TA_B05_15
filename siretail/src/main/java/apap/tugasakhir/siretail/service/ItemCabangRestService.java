@@ -18,4 +18,5 @@ public interface ItemCabangRestService {
     Mono<String> getStokItem(String uuid);
     CouponDetail getAllPromo();
     ItemCabangModel updateItemCabang(ItemCabangModel itemCabang);
+    void updateStok(String uuid, Integer stok);
 }
