@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/item")
@@ -55,21 +56,47 @@ public class ItemCabangController {
             mapItem.put(i.getUuid(), i);
         }
         if (itemCabang.getStok() > mapItem.get(itemCabang.getUuidItem()).getStok()){
-            System.out.println("masuk stok gacukup");
             model.addAttribute("itemCabang", itemCabang);
             model.addAttribute("listItem", arrResult);
-            model.addAttribute("error", 1);
+            model.addAttribute("error", "Stok tidak cukup");
             return "form-add-item";
         }
+        else if (itemCabang.getStok() <= 0){
+            model.addAttribute("itemCabang", itemCabang);
+            model.addAttribute("listItem", arrResult);
+            model.addAttribute("error", "Input stok harus lebih dari 0");
+            return "form-add-item";
+        }
+        else{
+            try {
+                ItemCabangModel itemExist = itemCabangRestService.getItemCabangByUuid(itemCabang.getUuidItem());
+                System.out.println("masuk udh ada");
+                itemExist.setStok(itemCabang.getStok() + itemExist.getStok());
+                itemCabangRestService.createItemCabang(itemExist);
 
-        itemCabang.setNama(mapItem.get(itemCabang.getUuidItem()).getNama());
-        itemCabang.setKategori(mapItem.get(itemCabang.getUuidItem()).getKategori());
-        itemCabang.setHarga(mapItem.get(itemCabang.getUuidItem()).getHarga());
+                Integer stok = mapItem.get(itemCabang.getUuidItem()).getStok() - itemCabang.getStok();
+                itemCabangRestService.updateStok(itemExist.getUuidItem(), stok);
+                
+                model.addAttribute("nama", itemExist.getNama());
+                model.addAttribute("cabang", itemExist.getCabang());
+                return "add-item";
+            }
+            catch (NoSuchElementException e){
+                System.out.println("masuk belom ada");
+                itemCabang.setNama(mapItem.get(itemCabang.getUuidItem()).getNama());
+                itemCabang.setKategori(mapItem.get(itemCabang.getUuidItem()).getKategori());
+                itemCabang.setHarga(mapItem.get(itemCabang.getUuidItem()).getHarga());
+        
+                itemCabangRestService.createItemCabang(itemCabang);
 
-        itemCabangRestService.createItemCabang(itemCabang);
-        model.addAttribute("nama", itemCabang.getNama());
-        model.addAttribute("cabang", itemCabang.getCabang());
-        return "add-item";
+                Integer stok = mapItem.get(itemCabang.getUuidItem()).getStok() - itemCabang.getStok();
+                itemCabangRestService.updateStok(itemCabang.getUuidItem(), stok);
+
+                model.addAttribute("nama", itemCabang.getNama());
+                model.addAttribute("cabang", itemCabang.getCabang());
+                return "add-item";
+            }
+        }
     }
 
     @GetMapping(value = "/promo/{idCabang}/{id}")
@@ -95,7 +122,7 @@ public class ItemCabangController {
         item.setHarga((int) harga);
         itemCabangRestService.updateItemCabang(item);
 
-        return "redirect:/cabang/view/"+idCabang;
+        return "redirect:/cabang/view/" + idCabang;
     }
 
 }

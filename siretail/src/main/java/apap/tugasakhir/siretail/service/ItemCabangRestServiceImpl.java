@@ -4,19 +4,18 @@ import apap.tugasakhir.siretail.model.ItemCabangModel;
 import apap.tugasakhir.siretail.repository.ItemCabangDb;
 import apap.tugasakhir.siretail.rest.CouponDetail;
 import apap.tugasakhir.siretail.rest.ItemDetail;
-import apap.tugasakhir.siretail.rest.ResultDetail;
+import apap.tugasakhir.siretail.rest.ItemDetailPut;
 import apap.tugasakhir.siretail.rest.Setting;
 import reactor.core.publisher.Mono;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -39,9 +38,19 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
     }
 
     @Override
+    public ItemCabangModel getItemCabangByUuid(String uuidItem){
+        Optional<ItemCabangModel> itemCabang = itemCabangDb.findByUuidItem(uuidItem);
+        if (itemCabang.isPresent()){
+            return itemCabang.get();
+        }
+        else{
+            throw new NoSuchElementException();
+        }
+    }
+
+    @Override
     public ItemCabangModel getItemCabangById(Integer id){
         Optional<ItemCabangModel> itemCabang = itemCabangDb.findById(id);
-        
         if (itemCabang.isPresent()){
             return itemCabang.get();
         }
@@ -73,6 +82,13 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
 
     public ItemCabangModel updateItemCabang(ItemCabangModel itemCabang) {
         return itemCabangDb.save(itemCabang);
+    }
+
+    @Override
+    public void updateStok(String uuid, Integer stok){
+        Map<String, Integer> data = new HashMap<>();
+        data.put("stok", stok);
+        this.webClient.put().uri("/api/item/" + uuid).syncBody(data).retrieve().bodyToMono(ItemDetailPut.class).block();
     }
 
     public ItemCabangRestServiceImpl(WebClient.Builder webClientBuilder){
