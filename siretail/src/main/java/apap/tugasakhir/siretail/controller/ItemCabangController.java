@@ -48,9 +48,10 @@ public class ItemCabangController {
         return "form-add-item";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add/{cabangId}")
     public String addItemSubmitPage(
-        @ModelAttribute ItemCabangModel itemCabang,
+        @ModelAttribute ListResultDetail listResultDetail,
+        @PathVariable Integer cabangId,
         Model model
     ){
         arrResult = itemCabangRestService.getAllItemCabang().getResult();
@@ -58,48 +59,99 @@ public class ItemCabangController {
         for (ResultDetail i: arrResult){
             mapItem.put(i.getUuid(), i);
         }
-        if (itemCabang.getStok() > mapItem.get(itemCabang.getUuidItem()).getStok()){
-            model.addAttribute("itemCabang", itemCabang);
-            model.addAttribute("listItem", arrResult);
-            model.addAttribute("error", "Stok tidak cukup");
-            return "form-add-item";
-        }
-        else if (itemCabang.getStok() <= 0){
-            model.addAttribute("itemCabang", itemCabang);
-            model.addAttribute("listItem", arrResult);
-            model.addAttribute("error", "Input stok harus lebih dari 0");
-            return "form-add-item";
-        }
-        else{
-            try {
-                ItemCabangModel itemExist = itemCabangRestService.getItemCabangByUuid(itemCabang.getUuidItem());
-                System.out.println("masuk udh ada");
-                itemExist.setStok(itemCabang.getStok() + itemExist.getStok());
-                itemCabangRestService.createItemCabang(itemExist);
-
-                Integer stok = mapItem.get(itemCabang.getUuidItem()).getStok() - itemCabang.getStok();
-                itemCabangRestService.updateStok(itemExist.getUuidItem(), stok);
-                
-                model.addAttribute("nama", itemExist.getNama());
-                model.addAttribute("cabang", itemExist.getCabang());
-                return "add-item";
-            }
-            catch (NoSuchElementException e){
-                System.out.println("masuk belom ada");
-                itemCabang.setNama(mapItem.get(itemCabang.getUuidItem()).getNama());
-                itemCabang.setKategori(mapItem.get(itemCabang.getUuidItem()).getKategori());
-                itemCabang.setHarga(mapItem.get(itemCabang.getUuidItem()).getHarga());
-        
-                itemCabangRestService.createItemCabang(itemCabang);
-
-                Integer stok = mapItem.get(itemCabang.getUuidItem()).getStok() - itemCabang.getStok();
-                itemCabangRestService.updateStok(itemCabang.getUuidItem(), stok);
-
-                model.addAttribute("nama", itemCabang.getNama());
-                model.addAttribute("cabang", itemCabang.getCabang());
-                return "add-item";
+        for (ResultDetail rd : listResultDetail.getResultDetailList()){
+            if (rd.getStok() > mapItem.get(rd.getUuid()).getStok()){
+//                model.addAttribute("itemCabang", itemCabang);
+//                model.addAttribute("listItem", arrResult);
+                model.addAttribute("error", "Stok tidak cukup");
+                model.addAttribute("cabangId", cabangId);
+                model.addAttribute("listItem", arrResult);
+                model.addAttribute("listResultDetail",listResultDetail);
+                return "form-add-item";
+            } else if (rd.getStok() <= 0){
+                model.addAttribute("error", "Input stok harus lebih dari 0");
+                model.addAttribute("cabangId", cabangId);
+                model.addAttribute("listItem", arrResult);
+                model.addAttribute("listResultDetail",listResultDetail);
+                return "form-add-item";
             }
         }
+        return null;
+        // BATAS UNCOMMENT
+//        for (ResultDetail rd : listResultDetail.getResultDetailList()){
+//            try {
+//                ItemCabangModel itemExist = itemCabangRestService.getItemCabangByUuid(rd.getUuid());
+//                System.out.println("masuk udh ada");
+//                itemExist.setStok(rd.getStok() + itemExist.getStok());
+//                itemCabangRestService.createItemCabang(itemExist);
+//
+//                Integer stok = mapItem.get(rd.getUuid()).getStok() - rd.getStok();
+//                itemCabangRestService.updateStok(itemExist.getUuidItem(), stok);
+//
+//                model.addAttribute("nama", itemExist.getNama());
+//                model.addAttribute("cabang", itemExist.getCabang());
+//                return "add-item";
+//            }
+//            catch (NoSuchElementException e){
+//                System.out.println("masuk belom ada");
+//                ItemCabangModel itemNew = new ItemCabangModel();
+//                itemCabang.setNama(mapItem.get(itemCabang.getUuidItem()).getNama());
+//                itemCabang.setKategori(mapItem.get(itemCabang.getUuidItem()).getKategori());
+//                itemCabang.setHarga(mapItem.get(itemCabang.getUuidItem()).getHarga());
+//
+//                itemCabangRestService.createItemCabang(itemCabang);
+//
+//                Integer stok = mapItem.get(itemCabang.getUuidItem()).getStok() - itemCabang.getStok();
+//                itemCabangRestService.updateStok(itemCabang.getUuidItem(), stok);
+//
+//                model.addAttribute("nama", itemCabang.getNama());
+//                model.addAttribute("cabang", itemCabang.getCabang());
+//                return "add-item";
+//            }
+//        }
+        //BATAS UNCOMMENT
+//        if (itemCabang.getStok() > mapItem.get(itemCabang.getUuidItem()).getStok()){
+//            model.addAttribute("itemCabang", itemCabang);
+//            model.addAttribute("listItem", arrResult);
+//            model.addAttribute("error", "Stok tidak cukup");
+//            return "form-add-item";
+//        }
+//        else if (itemCabang.getStok() <= 0){
+//            model.addAttribute("itemCabang", itemCabang);
+//            model.addAttribute("listItem", arrResult);
+//            model.addAttribute("error", "Input stok harus lebih dari 0");
+//            return "form-add-item";
+//        }
+//        else{
+//            try {
+//                ItemCabangModel itemExist = itemCabangRestService.getItemCabangByUuid(itemCabang.getUuidItem());
+//                System.out.println("masuk udh ada");
+//                itemExist.setStok(itemCabang.getStok() + itemExist.getStok());
+//                itemCabangRestService.createItemCabang(itemExist);
+//
+//                Integer stok = mapItem.get(itemCabang.getUuidItem()).getStok() - itemCabang.getStok();
+//                itemCabangRestService.updateStok(itemExist.getUuidItem(), stok);
+//
+//                model.addAttribute("nama", itemExist.getNama());
+//                model.addAttribute("cabang", itemExist.getCabang());
+//                return "add-item";
+//            }
+//            catch (NoSuchElementException e){
+//                System.out.println("masuk belom ada");
+//                itemCabang.setNama(mapItem.get(itemCabang.getUuidItem()).getNama());
+//                itemCabang.setKategori(mapItem.get(itemCabang.getUuidItem()).getKategori());
+//                itemCabang.setHarga(mapItem.get(itemCabang.getUuidItem()).getHarga());
+//
+//                itemCabangRestService.createItemCabang(itemCabang);
+//
+//                Integer stok = mapItem.get(itemCabang.getUuidItem()).getStok() - itemCabang.getStok();
+//                itemCabangRestService.updateStok(itemCabang.getUuidItem(), stok);
+//
+//                model.addAttribute("nama", itemCabang.getNama());
+//                model.addAttribute("cabang", itemCabang.getCabang());
+//                return "add-item";
+//            }
+        //}
     }
 
     @PostMapping(value = "/add/{cabangId}", params="addRow")
