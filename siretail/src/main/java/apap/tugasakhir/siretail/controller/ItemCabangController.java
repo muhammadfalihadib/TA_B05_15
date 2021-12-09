@@ -2,6 +2,7 @@ package apap.tugasakhir.siretail.controller;
 
 import apap.tugasakhir.siretail.model.ItemCabangModel;
 import apap.tugasakhir.siretail.model.CabangModel;
+import apap.tugasakhir.siretail.model.ListResultDetail;
 import apap.tugasakhir.siretail.rest.CouponDetail;
 import apap.tugasakhir.siretail.rest.ResultCouponDetail;
 import apap.tugasakhir.siretail.rest.ResultDetail;
@@ -16,10 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Controller
 @RequestMapping("/item")
@@ -35,14 +33,18 @@ public class ItemCabangController {
 
     List<ResultDetail> arrResult;
 
-    @GetMapping("/add/{id}")
-    public String addItemToCabang(@PathVariable Integer id, Model model){
-        ItemCabangModel itemCabang = new ItemCabangModel();
-        CabangModel cabang = cabangService.getCabangById(id);
-        itemCabang.setCabang(cabang);
+    @GetMapping("/add/{cabangId}")
+    public String addItemToCabang(@PathVariable Integer cabangId, Model model){
+        //ItemCabangModel itemCabang = new ItemCabangModel();
+        //CabangModel cabang = cabangService.getCabangById(id);
+        //itemCabang.setCabang(cabang);
         arrResult = itemCabangRestService.getAllItemCabang().getResult();
-        model.addAttribute("itemCabang", itemCabang);
+        ListResultDetail listResultDetail = new ListResultDetail();
+        listResultDetail.setResultDetailList(new ArrayList<>());
+        listResultDetail.getResultDetailList().add(new ResultDetail());
+        model.addAttribute("cabangId", cabangId);
         model.addAttribute("listItem", arrResult);
+        model.addAttribute("listResultDetail",listResultDetail);
         return "form-add-item";
     }
 
@@ -98,6 +100,42 @@ public class ItemCabangController {
                 return "add-item";
             }
         }
+    }
+
+    @PostMapping(value = "/add/{cabangId}", params="addRow")
+    public String addItemOnCabang(
+            @PathVariable Integer cabangId,
+            @ModelAttribute ListResultDetail listResultDetail,
+            Model model
+    ){
+//        System.out.println(listResultDetail.getResultDetailList().get(0).getNama());
+//        System.out.println(listResultDetail.getResultDetailList().get(0).getUuid());
+        listResultDetail.getResultDetailList().add(new ResultDetail());
+        System.out.println(listResultDetail.getResultDetailList().get(0).getUuid());
+        System.out.println(listResultDetail.getResultDetailList().get(0).getStok());
+        arrResult = itemCabangRestService.getAllItemCabang().getResult();
+        model.addAttribute("listResultDetail",listResultDetail);
+        model.addAttribute("cabangId", cabangId);
+        model.addAttribute("listItem", arrResult);
+        return "form-add-item";
+    }
+
+    @PostMapping(value = "/add/{cabangId}", params="deleteRow")
+    public String deleteItemOnCabang(
+            @PathVariable Integer cabangId,
+            @ModelAttribute ListResultDetail listResultDetail,
+            @RequestParam("deleteRow") int row,
+            Model model
+    ){
+//        System.out.println(listResultDetail.getResultDetailList().get(0).getNama());
+//        System.out.println(listResultDetail.getResultDetailList().get(0).getUuid());
+        List<ResultDetail> temp = listResultDetail.getResultDetailList();
+        listResultDetail.setResultDetailList(temp);
+        arrResult = itemCabangRestService.getAllItemCabang().getResult();
+        model.addAttribute("listResultDetail",listResultDetail);
+        model.addAttribute("cabangId", cabangId);
+        model.addAttribute("listItem", arrResult);
+        return "form-add-item";
     }
 
     @GetMapping(value = "/promo/{idCabang}/{id}")
