@@ -30,24 +30,30 @@
                 <div th:if="${error}">
                     <span style="color: red" th:text = "${error}"></span>
                 </div>
-                <form th:action="@{/item/add}" th:object="${itemCabang}" method="POST">
-                    <input type="hidden" th:field="*{kategori}" />
-                    <input type="hidden" th:field="*{harga}" />
-                    <input type="hidden" th:field="*{nama}" />
-                    <input type="hidden" th:field="*{cabang}" />
+                <form th:action="@{/item/add/} + ${cabangId}" th:object="${listResultDetail}" method="POST">
                     <label>Nama Item</label>
-                    <select th:field="*{uuidItem}" class="form-control">
-                        <option selected value="">-- Choose Item --</option>
-                        <option th:each="item: ${listItem}"
-                                th:value="${item.uuid}"
-                                th:text="${item.nama}">
-                        </option>>
-                    </select>
                     <br>
-                    <label>Jumlah Item</label>
-                    <input type="number" th:field="*{stok}" class="form-control"/>
-                    
+                    <button class="btn btn-primary" name="addRow">Tambah Row</button>
                     <br>
+                    <tr th:each="item, itemStat : *{resultDetailList}">
+                        <td>
+                            <select th:field="*{resultDetailList[__${itemStat.index}__].uuid}">
+                                <option th:each="it : ${listItem}" th:value="${it.uuid}" th:text="${it.nama}">
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <input class="form-control" type="number" th:field="*{resultDetailList[__${itemStat.index}__].stok}"/>
+                        </td>
+                        <td>
+                            <button th:value="${itemStat.index}" class="btn btn-danger" type="submit"
+                                    name="deleteRow">Hapus</button>
+                        </td>
+                    </tr>
+                    <br>
+<!--                    <label>Jumlah Item</label>-->
+<!--                    <input type="number" th:field="*{stok}" class="form-control"/>-->
+<!--                    <br>-->
                     <button type="submit" class="btn btn-info">Save</button>
                     <a class="btn btn-info" href="/">Home</a>
                     
