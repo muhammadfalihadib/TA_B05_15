@@ -37,4 +37,9 @@ public class CabangServiceImpl implements CabangService {
     public List<CabangModel> getListCabang(){
         return cabangDb.findAll();
     }
+
+    @Override
+    public void deleteCabang(Integer id){
+        cabangDb.deleteById(id);
+    }
 }

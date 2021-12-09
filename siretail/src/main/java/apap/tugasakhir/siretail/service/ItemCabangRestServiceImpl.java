@@ -73,10 +73,12 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
         return this.webClient.get().uri("/api/item/" + uuid).retrieve().bodyToMono(String.class);
     }
 
+
     @Override
     public CouponDetail getAllPromo() {
         return this.webClientCoupon.get().uri("/rest/coupon").retrieve().bodyToMono(CouponDetail.class).block();
     }
+
 
     public ItemCabangModel updateItemCabang(ItemCabangModel itemCabang) {
         return itemCabangDb.save(itemCabang);

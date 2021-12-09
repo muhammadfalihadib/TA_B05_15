@@ -9,4 +9,5 @@ public interface CabangService {
     CabangModel updateCabang(CabangModel cabang);
     CabangModel getCabangById(Integer id);
     List<CabangModel> getListCabang();
+    void deleteCabang(Integer id);
 }

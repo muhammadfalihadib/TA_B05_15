@@ -1,6 +1,8 @@
 package apap.tugasakhir.siretail.restcontroller;
 
 import apap.tugasakhir.siretail.model.CabangModel;
+import apap.tugasakhir.siretail.rest.BaseResponse;
+import apap.tugasakhir.siretail.rest.CabangDetail;
 import apap.tugasakhir.siretail.service.CabangRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,20 +21,33 @@ public class CabangRestController {
     private CabangRestService cabangRestService;
 
     @PostMapping(value = "/cabang")
-    private CabangModel createCabang(@Valid @RequestBody CabangModel cabang,
+    private BaseResponse<CabangModel> createCabang(@Valid @RequestBody CabangDetail cabang,
                                            BindingResult bindingResult){
         if(bindingResult.hasFieldErrors()){
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field"
             );
         } else{
-            cabang.setStatus(0);
-            return cabangRestService.saveCabang(cabang);
+            CabangModel cabangModel = new CabangModel();
+            cabangModel.setStatus(0);
+            cabangModel.setNama(cabang.getNama());
+            cabangModel.setAlamat(cabang.getAlamat());
+            cabangModel.setUkuran(cabang.getUkuran());
+            cabangModel.setNoTelp(cabang.getNoTelp());
+            BaseResponse<CabangModel> response = new BaseResponse<>();
+            response.setStatus(200);
+            response.setMessage("success");
+            response.setResult(cabangRestService.saveCabang(cabangModel));
+            return response;
         }
     }
 
     @GetMapping(value = "/cabang")
-    private List<CabangModel> getAllCabang(){
-        return cabangRestService.getAllCabang();
+    private BaseResponse<List<CabangModel>> getAllCabang(){
+        BaseResponse<List<CabangModel>> response = new BaseResponse<>();
+        response.setStatus(200);
+        response.setMessage("success");
+        response.setResult(cabangRestService.getAllCabang());
+        return response;
     }
 }

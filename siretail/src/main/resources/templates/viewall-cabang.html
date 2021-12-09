@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>View All Cabang</title>
     <object th:include = "fragments/fragment :: css" th:remove="tag"></object>
@@ -57,6 +58,9 @@
                                         <th> Jumlah Item </th>
                                         <th> Status Cabang </th>
                                         <th> Detail Cabang </th>
+                                        <th sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
+                                            Hapus Cabang
+                                        </th>
                                         <!-- <th> Update Cabang </th> -->
                                     </tr>
                                 </thead>
@@ -74,6 +78,9 @@
                                         <td th:if = "${cabang.status} == 2"> Disetujui </td>
                                         <td>
                                             <a class="btn btn-sm btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Detail</a>
+                                        </td>
+                                        <td sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
+                                            <a class="btn btn-sm btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}">Hapus</a>
                                         </td>
                                     </tr>
                                 </tbody>
