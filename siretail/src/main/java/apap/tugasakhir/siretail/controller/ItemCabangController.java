@@ -3,12 +3,14 @@ package apap.tugasakhir.siretail.controller;
 import apap.tugasakhir.siretail.model.ItemCabangModel;
 import apap.tugasakhir.siretail.model.CabangModel;
 import apap.tugasakhir.siretail.model.ListResultDetail;
+import apap.tugasakhir.siretail.model.UserModel;
 import apap.tugasakhir.siretail.rest.CouponDetail;
 import apap.tugasakhir.siretail.rest.ItemDetail;
 import apap.tugasakhir.siretail.rest.ResultCouponDetail;
 import apap.tugasakhir.siretail.rest.ResultDetail;
 import apap.tugasakhir.siretail.service.ItemCabangService;
 import apap.tugasakhir.siretail.service.CabangService;
+import apap.tugasakhir.siretail.service.UserService;
 import apap.tugasakhir.siretail.service.ItemCabangRestService;
 
 import org.json.JSONArray;
@@ -19,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.*;
 
@@ -41,22 +44,35 @@ public class ItemCabangController {
     @Autowired
     private ItemCabangService itemCabangService;
 
+    @Qualifier("userServiceImpl")
+    @Autowired
+    private UserService userService;
+
     List<ResultDetail> arrResult;
-    List<ResultDetail> arrResultNew; 
+    // List<ResultDetail> arrResultNew; 
 
     @GetMapping("/add/{cabangId}")
     public String addItemToCabang(@PathVariable Integer cabangId, Model model){
         //ItemCabangModel itemCabang = new ItemCabangModel();
-        //CabangModel cabang = cabangService.getCabangById(id);
-        //itemCabang.setCabang(cabang);
-        arrResult = itemCabangRestService.getAllItemCabang().getResult();
-        ListResultDetail listResultDetail = new ListResultDetail();
-        listResultDetail.setResultDetailList(new ArrayList<>());
-        listResultDetail.getResultDetailList().add(new ResultDetail());
-        model.addAttribute("cabangId", cabangId);
-        model.addAttribute("listItem", arrResult);
-        model.addAttribute("listResultDetail",listResultDetail);
-        return "form-add-item";
+
+        CabangModel cabang = cabangService.getCabangById(cabangId);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        UserModel userModel = userService.findByUsername(username);
+        
+        System.out.println(userModel.getRole());
+        if (cabang.getPenanggungJawab().getUsername().equals(userModel.getNama()) || userModel.getRole().getNama().equals("Kepala Retail")){
+            arrResult = itemCabangRestService.getAllItemCabang().getResult();
+            ListResultDetail listResultDetail = new ListResultDetail();
+            listResultDetail.setResultDetailList(new ArrayList<>());
+            listResultDetail.getResultDetailList().add(new ResultDetail());
+            model.addAttribute("cabangId", cabangId);
+            model.addAttribute("listItem", arrResult);
+            model.addAttribute("listResultDetail",listResultDetail);
+            return "form-add-item";
+        }
+        return "error/403";
     }
 
     @PostMapping("/add/{cabangId}")
