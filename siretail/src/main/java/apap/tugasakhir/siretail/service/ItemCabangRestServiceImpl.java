@@ -79,22 +79,6 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
         //.getResult();
     }
 
-    // @Override
-    // public ResultDetail getItemCabangByUuidResult(String uuid){
-    //     Optional<ResultDetail> rd = itemCabangRestDb.findByUuidItem(uuid);
-    //     if (rd.isPresent()){
-    //         return rd.get();
-    //     }
-    //     else{
-    //         throw new NoSuchElementException();
-    //     }
-    // }
-
-    // @Override
-    // public ResultDetail createItemCabangRd(ResultDetail rd){
-    //     return itemCabangRestDb.save(rd);
-    // }
-
     @Override
     public Mono<String> getStokItem(String uuid){
         return this.webClient.get().uri("/api/item/" + uuid).retrieve().bodyToMono(String.class);
