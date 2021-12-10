@@ -56,7 +56,10 @@
                     <h4 id = "title2">List Item Cabang: </h4>
                     <a class="btn btn-info" th:href="@{/item/add/} + ${cabang.id}">Add Item</a>
                     <br>
-                    <a class="btn btn-info" th:href="@{/item/increase/} + ${cabang.id}">Increase Item Stock</a>
+                    <div>
+                        <br>
+                        <a class="btn btn-outline-info" th:href="@{/item/increase/} + ${cabang.id}">Increase Item Stock</a>
+                    </div>
                     <div th:if = "*{listItemCabang.size() != 0}">
                         <form th:action = "@{/item/delete}" th:object = "${cabang}" method = "POST">
                             <input type="hidden" th:field="*{id}">
