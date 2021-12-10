@@ -3,11 +3,7 @@ package apap.tugasakhir.siretail.service;
 import apap.tugasakhir.siretail.model.ItemCabangModel;
 import apap.tugasakhir.siretail.model.ListResultDetail;
 import apap.tugasakhir.siretail.repository.ItemCabangDb;
-import apap.tugasakhir.siretail.rest.CouponDetail;
-import apap.tugasakhir.siretail.rest.ItemDetail;
-import apap.tugasakhir.siretail.rest.ItemDetailPut;
-import apap.tugasakhir.siretail.rest.ResultDetail;
-import apap.tugasakhir.siretail.rest.Setting;
+import apap.tugasakhir.siretail.rest.*;
 import reactor.core.publisher.Mono;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +24,7 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
     ItemCabangDb itemCabangDb;
     private final WebClient webClient;
     private final WebClient webClientCoupon;
+    private final WebClient webClientFactory;
 
     @Override
     public ItemCabangModel createItemCabang(ItemCabangModel itemCabang){
@@ -118,9 +115,19 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
         this.webClient.put().uri("/api/item/" + uuid).syncBody(data).retrieve().bodyToMono(ItemDetailPut.class).block();
     }
 
+    @Override
+    public String postIncreaseItem(PostItemDetail item) {
+        HashMap<String, Object> x =  this.webClientFactory.post().uri("/api/requestUpdateItem/createRequest").syncBody(item).retrieve().bodyToMono(HashMap.class).block();
+        int status = (Integer) x.get("status");
+        if ( !(status >= 200 && status < 300) || x == null) return null;
+        HashMap<String, Object> res = (HashMap<String, Object>) x.get("result");
+        return (String) res.get("id_item");
+    }
+
     public ItemCabangRestServiceImpl(WebClient.Builder webClientBuilder){
         this.webClient = webClientBuilder.baseUrl(Setting.itemCabangUrl).build();
         this.webClientCoupon = webClientBuilder.baseUrl(Setting.couponUrl).build();
+        this.webClientFactory = webClientBuilder.baseUrl(Setting.factoryUrl).build();
     }
 }
 

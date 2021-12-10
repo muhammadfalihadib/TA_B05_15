@@ -13,20 +13,19 @@ import java.time.LocalDate;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ResultCouponDetail {
-    @JsonProperty(value = "id_coupon")
+    @JsonProperty(value = "idCoupon")
     private Integer id;
 
-    @JsonProperty(value = "coupon_name")
+    @JsonProperty(value = "couponName")
     private String name;
 
-    @JsonProperty(value = "coupon_code")
+    @JsonProperty(value = "couponCode")
     private String code;
 
-    @JsonProperty(value = "discount_amount")
+    @JsonProperty(value = "discountAmount")
     private Float discountAmount;
 
-    // prevent error
-    @JsonProperty(value = "expiry_date")
-    // @DateTimeFormat(pattern = "YYYY-MM-dd")
-    private String expiryDate;
+    @JsonProperty(value = "expiryDate")
+    @DateTimeFormat(pattern = "YYYY-MM-dd")
+    private LocalDate expiryDate;
 }
