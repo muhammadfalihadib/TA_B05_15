@@ -8,6 +8,7 @@ import apap.tugasakhir.siretail.rest.CouponDetail;
 import apap.tugasakhir.siretail.rest.ItemDetail;
 import apap.tugasakhir.siretail.rest.ResultCouponDetail;
 import apap.tugasakhir.siretail.rest.ResultDetail;
+import apap.tugasakhir.siretail.rest.PostItemDetail;
 import apap.tugasakhir.siretail.service.ItemCabangService;
 import apap.tugasakhir.siretail.service.CabangService;
 import apap.tugasakhir.siretail.service.UserService;
@@ -254,6 +255,61 @@ public class ItemCabangController {
         itemCabangRestService.updateItemCabang(item);
 
         return "redirect:/cabang/view/" + idCabang;
+    }
+
+    @GetMapping(value = "/increase/{idCabang}")
+    public String increaseItem(@PathVariable("idCabang") String idCabang,
+                               Model model) {
+        arrResult = itemCabangRestService.getAllItemCabang().getResult();
+        PostItemDetail item = new PostItemDetail();
+        item.setIdCabang(Integer.parseInt(idCabang));
+        model.addAttribute("listItem", arrResult);
+        model.addAttribute("idCabang", idCabang);
+        model.addAttribute("item", item);
+        return "form-increase-item";
+    }
+
+    @PostMapping(value = "/increase")
+    public String postIncreaseItem(@ModelAttribute PostItemDetail item, Model model){
+        String itemName = "item";
+        String itemCode = "code";
+        if (item.getTambahanStok() < 1) {
+            model.addAttribute("listItem", arrResult);
+            model.addAttribute("idCabang", item.getIdCabang());
+            model.addAttribute("item", item);
+            model.addAttribute("error", "Stok bernilai negatif atau 0");
+            return "form-increase-item";
+        }
+
+        for (ResultDetail res: arrResult) {
+            if (res.getUuid().equals(item.getIdItem())) {
+                int kategori = 0;
+                String strKategori = res.getKategori();
+                if (strKategori.equals("BUKU")) {kategori = 1;}
+                else if (strKategori.equals("DAPUR")) {kategori = 2;}
+                else if (strKategori.equals("MAKANAN & MINUMAN")) {kategori = 3;}
+                else if (strKategori.equals("ELEKTRONIK")) {kategori = 4;}
+                else if (strKategori.equals("FASHION")) {kategori = 5;}
+                else if (strKategori.equals("KECANTIKAN & PERAWATAN DIRI")) {kategori = 6;}
+                else if (strKategori.equals("FILM & MUSIK")) {kategori = 7;}
+                else if (strKategori.equals("GAMING")) {kategori = 8;}
+                else if (strKategori.equals("GADGET")) {kategori = 9;}
+                else if (strKategori.equals("KESEHATAN")) {kategori = 10;}
+                else if (strKategori.equals("RUMAH TANGGA")) {kategori = 11;}
+                else if (strKategori.equals("FURNITURE")) {kategori = 12;}
+                else if (strKategori.equals("ALAT & PERANGKAT KERAS")) {kategori = 13;}
+                else if (strKategori.equals("WEDDING")) {kategori = 14;}
+
+                item.setIdKategori(kategori);
+                itemCode = itemCabangRestService.postIncreaseItem(item);
+                itemName = res.getNama();
+                model.addAttribute("cabang", item.getIdCabang());
+            }
+        }
+        model.addAttribute("name", itemName);
+        model.addAttribute("id", itemCode);
+
+        return "increase-item";
     }
 
 }
