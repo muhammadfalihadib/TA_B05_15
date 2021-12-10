@@ -85,6 +85,8 @@ public class ItemCabangController {
                 model.addAttribute("listResultDetail",listResultDetail);
                 return "form-add-item";
             }
+        }
+        for (ResultDetail rd : listResultDetail.getResultDetailList()){
             try {
                 ItemCabangModel rdCheck = new ItemCabangModel();
                 rdCheck.setUuidItem(rd.getUuid());
@@ -92,12 +94,26 @@ public class ItemCabangController {
                 rdCheck.setStok(rd.getStok());
                 rdCheck.setHarga(rd.getHarga());
                 rdCheck.setKategori(rd.getKategori());
-                rdCheck.setCabang(cabangService.getCabangById(cabangId));
-
-                ItemCabangModel rdExist = itemCabangRestService.getItemCabangByUuid(rdCheck.getUuidItem());
+                CabangModel cabang = cabangService.getCabangById(cabangId);
+                rdCheck.setCabang(cabang);
+                ItemCabangModel rdExist = null;
+                // for (ItemCabangModel itemCek : cabang.getListItemCabang()){
+                //     if (rdCheck.getUuidItem().equals(itemCek.getUuidItem())) {
+                //         rdExist = itemCek;
+                //         break;
+                //     }
+                // }
+                
+                for (ItemCabangModel itemCek : itemCabangRestService.retrieveListItemCabang()){
+                    if (rdCheck.getCabang().getId().equals(itemCek.getCabang().getId())
+                        && rdCheck.getUuidItem().equals(itemCek.getUuidItem())){
+                        rdExist = itemCek;
+                        break;
+                    }
+                }
                 System.out.println(rdExist);
 
-                if (rdExist.getCabang().getId().equals(cabangId)){
+                if (rdExist != null && rdExist.getCabang().getId().equals(cabangId)){
                     System.out.println("masuk udh ada pada cabang tersebut");
                     rdExist.setStok(rd.getStok() + rdExist.getStok());
 
@@ -108,30 +124,32 @@ public class ItemCabangController {
     
                     model.addAttribute("nama", rdExist.getNama());
                     // model.addAttribute("cabang", rdExist.getCabang());
-                    return "add-item";
+                    // return "add-item";
                 }
-                
-                System.out.println("masuk blm ada pada cabang tersebut");
-                rd.setNama(mapItem.get(rd.getUuid()).getNama());
-                rd.setKategori(mapItem.get(rd.getUuid()).getKategori());
-                rd.setHarga(mapItem.get(rd.getUuid()).getHarga());
-                
-                ItemCabangModel rdExistModel = new ItemCabangModel();
-                rdExistModel.setUuidItem(rd.getUuid());
-                rdExistModel.setNama(rd.getNama());
-                rdExistModel.setStok(rd.getStok());
-                rdExistModel.setHarga(rd.getHarga());
-                rdExistModel.setKategori(rd.getKategori());
-                rdExistModel.setCabang(cabangService.getCabangById(cabangId));
+                else{
+                    System.out.println("masuk blm ada pada cabang tersebut");
+                    rd.setNama(mapItem.get(rd.getUuid()).getNama());
+                    rd.setKategori(mapItem.get(rd.getUuid()).getKategori());
+                    rd.setHarga(mapItem.get(rd.getUuid()).getHarga());
+                    
+                    // Ini kenapa gapake rdCheck aja yah yg di atas? -Ori
+                    ItemCabangModel rdExistModel = new ItemCabangModel();
+                    rdExistModel.setUuidItem(rd.getUuid());
+                    rdExistModel.setNama(rd.getNama());
+                    rdExistModel.setStok(rd.getStok());
+                    rdExistModel.setHarga(rd.getHarga());
+                    rdExistModel.setKategori(rd.getKategori());
+                    rdExistModel.setCabang(cabangService.getCabangById(cabangId));
 
-                itemCabangRestService.createItemCabang(rdExistModel);
- 
-                Integer stok = mapItem.get(rd.getUuid()).getStok() - rd.getStok();
-                itemCabangRestService.updateStok(rd.getUuid(), stok);
- 
-                model.addAttribute("nama", rd.getNama());
+                    itemCabangRestService.createItemCabang(rdExistModel);
+    
+                    Integer stok = mapItem.get(rd.getUuid()).getStok() - rd.getStok();
+                    itemCabangRestService.updateStok(rd.getUuid(), stok);
+    
+                    model.addAttribute("nama", rd.getNama());
                 // model.addAttribute("cabang", itemCabang.getCabang());
-                return "add-item";
+                // return "add-item";
+                }
             }
             catch (NoSuchElementException e){
                 System.out.println("masuk belom ada samsek di database");
@@ -154,10 +172,10 @@ public class ItemCabangController {
  
                 model.addAttribute("nama", rd.getNama());
                 // model.addAttribute("cabang", itemCabang.getCabang());
-                return "add-item";
+                // return "add-item";
             }
         }
-        return null;
+        return "add-item";
     }
 
     @PostMapping(value = "/add/{cabangId}", params="addRow")
