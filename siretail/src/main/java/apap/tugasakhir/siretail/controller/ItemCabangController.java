@@ -96,12 +96,12 @@ public class ItemCabangController {
 
                 ItemCabangModel rdExist = itemCabangRestService.getItemCabangByUuid(rdCheck.getUuidItem());
                 System.out.println(rdExist.getCabang());
-                if (rdExist.getCabang() == cabangService.getCabangById(cabangId)){
-                    System.out.println("masuk udh ada");
+                if (rdExist.getCabang().getId().equals(cabangId)){
+                    System.out.println("masuk udh ada pada cabang tersebut");
                     rdExist.setStok(rd.getStok() + rdExist.getStok());
 
                     itemCabangRestService.createItemCabang(rdExist);
-    
+
                     Integer stok = mapItem.get(rd.getUuid()).getStok() - rd.getStok();
                     itemCabangRestService.updateStok(rdExist.getUuidItem(), stok);
     
