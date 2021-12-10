@@ -2,6 +2,7 @@ package apap.tugasakhir.siretail.controller;
 
 import apap.tugasakhir.siretail.model.ItemCabangModel;
 import apap.tugasakhir.siretail.model.CabangModel;
+import apap.tugasakhir.siretail.model.UserModel;
 import apap.tugasakhir.siretail.model.ListResultDetail;
 import apap.tugasakhir.siretail.rest.CouponDetail;
 import apap.tugasakhir.siretail.rest.ItemDetail;
@@ -9,6 +10,7 @@ import apap.tugasakhir.siretail.rest.ResultCouponDetail;
 import apap.tugasakhir.siretail.rest.ResultDetail;
 import apap.tugasakhir.siretail.service.ItemCabangService;
 import apap.tugasakhir.siretail.service.CabangService;
+import apap.tugasakhir.siretail.service.UserService;
 import apap.tugasakhir.siretail.service.ItemCabangRestService;
 
 import org.json.JSONArray;
@@ -41,22 +43,29 @@ public class ItemCabangController {
     @Autowired
     private ItemCabangService itemCabangService;
 
+    @Qualifier("userServiceImpl")
+    @Autowired
+    private UserService userService;
+
     List<ResultDetail> arrResult;
-    List<ResultDetail> arrResultNew; 
+    
 
     @GetMapping("/add/{cabangId}")
     public String addItemToCabang(@PathVariable Integer cabangId, Model model){
-        //ItemCabangModel itemCabang = new ItemCabangModel();
-        //CabangModel cabang = cabangService.getCabangById(id);
-        //itemCabang.setCabang(cabang);
-        arrResult = itemCabangRestService.getAllItemCabang().getResult();
-        ListResultDetail listResultDetail = new ListResultDetail();
-        listResultDetail.setResultDetailList(new ArrayList<>());
-        listResultDetail.getResultDetailList().add(new ResultDetail());
-        model.addAttribute("cabangId", cabangId);
-        model.addAttribute("listItem", arrResult);
-        model.addAttribute("listResultDetail",listResultDetail);
-        return "form-add-item";
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        CabangModel cabang = cabangService.getCabangById(cabangId);
+        System.out.println(cabang.getPenanggungJawab().getUsername());
+        if (cabang.getPenanggungJawab().getUsername().equals(username)) {
+            arrResult = itemCabangRestService.getAllItemCabang().getResult();
+            ListResultDetail listResultDetail = new ListResultDetail();
+            listResultDetail.setResultDetailList(new ArrayList<>());
+            listResultDetail.getResultDetailList().add(new ResultDetail());
+            model.addAttribute("cabangId", cabangId);
+            model.addAttribute("listItem", arrResult);
+            model.addAttribute("listResultDetail",listResultDetail);
+            return "form-add-item";
+        }
+        return "error/403";
     }
 
     @PostMapping("/add/{cabangId}")
@@ -92,12 +101,23 @@ public class ItemCabangController {
                 rdCheck.setStok(rd.getStok());
                 rdCheck.setHarga(rd.getHarga());
                 rdCheck.setKategori(rd.getKategori());
-                rdCheck.setCabang(cabangService.getCabangById(cabangId));
 
-                ItemCabangModel rdExist = itemCabangRestService.getItemCabangByUuid(rdCheck.getUuidItem());
-                System.out.println(rdExist);
+                CabangModel cabang = cabangService.getCabangById(cabangId);
+                rdCheck.setCabang(cabang);
 
-                if (rdExist.getCabang().getId().equals(cabangId)){
+                List<ItemCabangModel> listItem = cabang.getListItemCabang();
+                Boolean itemExist;
+                ItemCabangModel rdExist;
+                for (ItemCabangModel item : listItem) {
+                    if (rdCheck.getUuidItem().equals(item.getUuidItem()))) {
+                        itemExist = true;
+                        rdExist = item;
+                        break;
+                    }
+                    
+                }
+                
+                if (itemExist){
                     System.out.println("masuk udh ada pada cabang tersebut");
                     rdExist.setStok(rd.getStok() + rdExist.getStok());
 
@@ -125,7 +145,7 @@ public class ItemCabangController {
                 rdExistModel.setCabang(cabangService.getCabangById(cabangId));
 
                 itemCabangRestService.createItemCabang(rdExistModel);
- 
+
                 Integer stok = mapItem.get(rd.getUuid()).getStok() - rd.getStok();
                 itemCabangRestService.updateStok(rd.getUuid(), stok);
  
