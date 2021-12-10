@@ -11,6 +11,7 @@
 	<groupId>apap.tugasakhir</groupId>
 	<artifactId>siretail</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>siretail</name>
 	<description>Tugas Akhir APAP B05 Kelompok 15</description>
 	<properties>
