@@ -1,10 +1,12 @@
 package apap.tugasakhir.siretail.service;
 
 import apap.tugasakhir.siretail.model.ItemCabangModel;
+import apap.tugasakhir.siretail.model.ListResultDetail;
 import apap.tugasakhir.siretail.repository.ItemCabangDb;
 import apap.tugasakhir.siretail.rest.CouponDetail;
 import apap.tugasakhir.siretail.rest.ItemDetail;
 import apap.tugasakhir.siretail.rest.ItemDetailPut;
+import apap.tugasakhir.siretail.rest.ResultDetail;
 import apap.tugasakhir.siretail.rest.Setting;
 import reactor.core.publisher.Mono;
 
@@ -67,6 +69,31 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
         .block();
         //.getResult();
     }
+
+    @Override
+    public ResultDetail getItemCabangByUuidResult(String uuid){
+        return this.webClient.get().uri("/api/item/" + uuid)
+        .retrieve()
+        .bodyToMono(ResultDetail.class)
+        .block();
+        //.getResult();
+    }
+
+    // @Override
+    // public ResultDetail getItemCabangByUuidResult(String uuid){
+    //     Optional<ResultDetail> rd = itemCabangRestDb.findByUuidItem(uuid);
+    //     if (rd.isPresent()){
+    //         return rd.get();
+    //     }
+    //     else{
+    //         throw new NoSuchElementException();
+    //     }
+    // }
+
+    // @Override
+    // public ResultDetail createItemCabangRd(ResultDetail rd){
+    //     return itemCabangRestDb.save(rd);
+    // }
 
     @Override
     public Mono<String> getStokItem(String uuid){

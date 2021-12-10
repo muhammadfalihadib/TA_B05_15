@@ -4,11 +4,14 @@ import apap.tugasakhir.siretail.model.ItemCabangModel;
 import apap.tugasakhir.siretail.model.CabangModel;
 import apap.tugasakhir.siretail.model.ListResultDetail;
 import apap.tugasakhir.siretail.rest.CouponDetail;
+import apap.tugasakhir.siretail.rest.ItemDetail;
 import apap.tugasakhir.siretail.rest.ResultCouponDetail;
 import apap.tugasakhir.siretail.rest.ResultDetail;
 import apap.tugasakhir.siretail.service.ItemCabangService;
 import apap.tugasakhir.siretail.service.CabangService;
 import apap.tugasakhir.siretail.service.ItemCabangRestService;
+
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -18,6 +21,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @RequestMapping("/item")
@@ -31,7 +37,12 @@ public class ItemCabangController {
     @Autowired
     private CabangService cabangService;
 
+    @Qualifier("itemCabangServiceImpl")
+    @Autowired
+    private ItemCabangService itemCabangService;
+
     List<ResultDetail> arrResult;
+    List<ResultDetail> arrResultNew; 
 
     @GetMapping("/add/{cabangId}")
     public String addItemToCabang(@PathVariable Integer cabangId, Model model){
@@ -60,9 +71,8 @@ public class ItemCabangController {
             mapItem.put(i.getUuid(), i);
         }
         for (ResultDetail rd : listResultDetail.getResultDetailList()){
+            System.out.println(listResultDetail.getResultDetailList());
             if (rd.getStok() > mapItem.get(rd.getUuid()).getStok()){
-//                model.addAttribute("itemCabang", itemCabang);
-//                model.addAttribute("listItem", arrResult);
                 model.addAttribute("error", "Stok tidak cukup");
                 model.addAttribute("cabangId", cabangId);
                 model.addAttribute("listItem", arrResult);
@@ -75,83 +85,59 @@ public class ItemCabangController {
                 model.addAttribute("listResultDetail",listResultDetail);
                 return "form-add-item";
             }
+            try {
+                ItemCabangModel rdCheck = new ItemCabangModel();
+                rdCheck.setUuidItem(rd.getUuid());
+                rdCheck.setNama(rd.getNama());
+                rdCheck.setStok(rd.getStok());
+                rdCheck.setHarga(rd.getHarga());
+                rdCheck.setKategori(rd.getKategori());
+                rdCheck.setCabang(cabangService.getCabangById(cabangId));
+
+                ItemCabangModel rdExist = itemCabangRestService.getItemCabangByUuid(rdCheck.getUuidItem());
+                // System.out.println(rdExist);
+                // System.out.println("masuk udh ada");
+                // System.out.println(rdExist.getStok());
+                rdExist.setStok(rd.getStok() + rdExist.getStok());
+                // System.out.println("habis nambah stok");
+                // System.out.println(rdExist.getStok());
+
+                itemCabangRestService.createItemCabang(rdExist);
+ 
+                Integer stok = mapItem.get(rd.getUuid()).getStok() - rd.getStok();
+                itemCabangRestService.updateStok(rdExist.getUuidItem(), stok);
+ 
+                model.addAttribute("nama", rdExist.getNama());
+                // model.addAttribute("cabang", rdExist.getCabang());
+                return "add-item";
+            }
+            catch (NoSuchElementException e){
+                System.out.println("masuk belom ada");
+                // ResultDetail rdNew = new ResultDetail();
+                rd.setNama(mapItem.get(rd.getUuid()).getNama());
+                rd.setKategori(mapItem.get(rd.getUuid()).getKategori());
+                rd.setHarga(mapItem.get(rd.getUuid()).getHarga());
+                
+                ItemCabangModel rdExistModel = new ItemCabangModel();
+                rdExistModel.setUuidItem(rd.getUuid());
+                rdExistModel.setNama(rd.getNama());
+                rdExistModel.setStok(rd.getStok());
+                rdExistModel.setHarga(rd.getHarga());
+                rdExistModel.setKategori(rd.getKategori());
+                rdExistModel.setCabang(cabangService.getCabangById(cabangId));
+
+                itemCabangRestService.createItemCabang(rdExistModel);
+                //itemCabangRestService.createItemCabangRd(rd);
+ 
+                Integer stok = mapItem.get(rd.getUuid()).getStok() - rd.getStok();
+                itemCabangRestService.updateStok(rd.getUuid(), stok);
+ 
+                model.addAttribute("nama", rd.getNama());
+                // model.addAttribute("cabang", itemCabang.getCabang());
+                return "add-item";
+            }
         }
         return null;
-        // BATAS UNCOMMENT
-//        for (ResultDetail rd : listResultDetail.getResultDetailList()){
-//            try {
-//                ItemCabangModel itemExist = itemCabangRestService.getItemCabangByUuid(rd.getUuid());
-//                System.out.println("masuk udh ada");
-//                itemExist.setStok(rd.getStok() + itemExist.getStok());
-//                itemCabangRestService.createItemCabang(itemExist);
-//
-//                Integer stok = mapItem.get(rd.getUuid()).getStok() - rd.getStok();
-//                itemCabangRestService.updateStok(itemExist.getUuidItem(), stok);
-//
-//                model.addAttribute("nama", itemExist.getNama());
-//                model.addAttribute("cabang", itemExist.getCabang());
-//                return "add-item";
-//            }
-//            catch (NoSuchElementException e){
-//                System.out.println("masuk belom ada");
-//                ItemCabangModel itemNew = new ItemCabangModel();
-//                itemCabang.setNama(mapItem.get(itemCabang.getUuidItem()).getNama());
-//                itemCabang.setKategori(mapItem.get(itemCabang.getUuidItem()).getKategori());
-//                itemCabang.setHarga(mapItem.get(itemCabang.getUuidItem()).getHarga());
-//
-//                itemCabangRestService.createItemCabang(itemCabang);
-//
-//                Integer stok = mapItem.get(itemCabang.getUuidItem()).getStok() - itemCabang.getStok();
-//                itemCabangRestService.updateStok(itemCabang.getUuidItem(), stok);
-//
-//                model.addAttribute("nama", itemCabang.getNama());
-//                model.addAttribute("cabang", itemCabang.getCabang());
-//                return "add-item";
-//            }
-//        }
-        //BATAS UNCOMMENT
-//        if (itemCabang.getStok() > mapItem.get(itemCabang.getUuidItem()).getStok()){
-//            model.addAttribute("itemCabang", itemCabang);
-//            model.addAttribute("listItem", arrResult);
-//            model.addAttribute("error", "Stok tidak cukup");
-//            return "form-add-item";
-//        }
-//        else if (itemCabang.getStok() <= 0){
-//            model.addAttribute("itemCabang", itemCabang);
-//            model.addAttribute("listItem", arrResult);
-//            model.addAttribute("error", "Input stok harus lebih dari 0");
-//            return "form-add-item";
-//        }
-//        else{
-//            try {
-//                ItemCabangModel itemExist = itemCabangRestService.getItemCabangByUuid(itemCabang.getUuidItem());
-//                System.out.println("masuk udh ada");
-//                itemExist.setStok(itemCabang.getStok() + itemExist.getStok());
-//                itemCabangRestService.createItemCabang(itemExist);
-//
-//                Integer stok = mapItem.get(itemCabang.getUuidItem()).getStok() - itemCabang.getStok();
-//                itemCabangRestService.updateStok(itemExist.getUuidItem(), stok);
-//
-//                model.addAttribute("nama", itemExist.getNama());
-//                model.addAttribute("cabang", itemExist.getCabang());
-//                return "add-item";
-//            }
-//            catch (NoSuchElementException e){
-//                System.out.println("masuk belom ada");
-//                itemCabang.setNama(mapItem.get(itemCabang.getUuidItem()).getNama());
-//                itemCabang.setKategori(mapItem.get(itemCabang.getUuidItem()).getKategori());
-//                itemCabang.setHarga(mapItem.get(itemCabang.getUuidItem()).getHarga());
-//
-//                itemCabangRestService.createItemCabang(itemCabang);
-//
-//                Integer stok = mapItem.get(itemCabang.getUuidItem()).getStok() - itemCabang.getStok();
-//                itemCabangRestService.updateStok(itemCabang.getUuidItem(), stok);
-//
-//                model.addAttribute("nama", itemCabang.getNama());
-//                model.addAttribute("cabang", itemCabang.getCabang());
-//                return "add-item";
-//            }
-        //}
     }
 
     @PostMapping(value = "/add/{cabangId}", params="addRow")
@@ -162,9 +148,17 @@ public class ItemCabangController {
     ){
 //        System.out.println(listResultDetail.getResultDetailList().get(0).getNama());
 //        System.out.println(listResultDetail.getResultDetailList().get(0).getUuid());
+        if (listResultDetail.getResultDetailList() == null || listResultDetail.getResultDetailList().size() == 0) {
+            listResultDetail.setResultDetailList(new ArrayList<>());
+        }
         listResultDetail.getResultDetailList().add(new ResultDetail());
-        System.out.println(listResultDetail.getResultDetailList().get(0).getUuid());
-        System.out.println(listResultDetail.getResultDetailList().get(0).getStok());
+        // System.out.println(listResultDetail.getResultDetailList().get(0).getUuid());
+        // System.out.println(listResultDetail.getResultDetailList().get(0).getStok());
+        // for (ResultDetail i: listResultDetail.getResultDetailList()){
+        //     System.out.print(i.getNama());
+        // }
+        System.out.println("cek isi list result");
+        System.out.println(listResultDetail.getResultDetailList());
         arrResult = itemCabangRestService.getAllItemCabang().getResult();
         model.addAttribute("listResultDetail",listResultDetail);
         model.addAttribute("cabangId", cabangId);
@@ -179,10 +173,9 @@ public class ItemCabangController {
             @RequestParam("deleteRow") int row,
             Model model
     ){
-//        System.out.println(listResultDetail.getResultDetailList().get(0).getNama());
-//        System.out.println(listResultDetail.getResultDetailList().get(0).getUuid());
         List<ResultDetail> temp = listResultDetail.getResultDetailList();
         listResultDetail.setResultDetailList(temp);
+        listResultDetail.getResultDetailList().remove(row);
         arrResult = itemCabangRestService.getAllItemCabang().getResult();
         model.addAttribute("listResultDetail",listResultDetail);
         model.addAttribute("cabangId", cabangId);
