@@ -40,8 +40,10 @@
                     <label>Ukuran cabang (dalam m2)</label>
                     <input type="number" name="ukuran" class="form-control"/>
                     <br>
-                    <button type="submit" class="btn btn-info">Simpan</button>
-                    <a class="btn btn-info" href="/">Home</a>
+                    <div style = "text-align:center;">
+                        <a class="btn btn-info" th:href="@{/cabang/viewall}">Back to List Cabang</a>
+                        <button type="submit" class="btn btn-outline-info">Save</button>
+                    </div>
                 </form>
             </div>
         </div>
