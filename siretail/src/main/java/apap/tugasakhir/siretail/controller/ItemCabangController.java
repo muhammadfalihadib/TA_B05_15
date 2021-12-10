@@ -95,24 +95,56 @@ public class ItemCabangController {
                 rdCheck.setCabang(cabangService.getCabangById(cabangId));
 
                 ItemCabangModel rdExist = itemCabangRestService.getItemCabangByUuid(rdCheck.getUuidItem());
-                // System.out.println(rdExist);
-                // System.out.println("masuk udh ada");
-                // System.out.println(rdExist.getStok());
-                rdExist.setStok(rd.getStok() + rdExist.getStok());
-                // System.out.println("habis nambah stok");
-                // System.out.println(rdExist.getStok());
+                System.out.println(rdExist.getCabang());
+                if (rdExist.getCabang() == cabangService.getCabangById(cabangId)){
+                    System.out.println("masuk udh ada");
+                    rdExist.setStok(rd.getStok() + rdExist.getStok());
 
-                itemCabangRestService.createItemCabang(rdExist);
+                    itemCabangRestService.createItemCabang(rdExist);
+    
+                    Integer stok = mapItem.get(rd.getUuid()).getStok() - rd.getStok();
+                    itemCabangRestService.updateStok(rdExist.getUuidItem(), stok);
+    
+                    model.addAttribute("nama", rdExist.getNama());
+                    // model.addAttribute("cabang", rdExist.getCabang());
+                    return "add-item";
+                }
+                // System.out.println(rdExist);
+                System.out.println("masuk blm ada pada cabang tersebut");
+                rd.setNama(mapItem.get(rd.getUuid()).getNama());
+                rd.setKategori(mapItem.get(rd.getUuid()).getKategori());
+                rd.setHarga(mapItem.get(rd.getUuid()).getHarga());
+                
+                ItemCabangModel rdExistModel = new ItemCabangModel();
+                rdExistModel.setUuidItem(rd.getUuid());
+                rdExistModel.setNama(rd.getNama());
+                rdExistModel.setStok(rd.getStok());
+                rdExistModel.setHarga(rd.getHarga());
+                rdExistModel.setKategori(rd.getKategori());
+                rdExistModel.setCabang(cabangService.getCabangById(cabangId));
+
+                itemCabangRestService.createItemCabang(rdExistModel);
+                //itemCabangRestService.createItemCabangRd(rd);
  
                 Integer stok = mapItem.get(rd.getUuid()).getStok() - rd.getStok();
-                itemCabangRestService.updateStok(rdExist.getUuidItem(), stok);
+                itemCabangRestService.updateStok(rd.getUuid(), stok);
  
-                model.addAttribute("nama", rdExist.getNama());
-                // model.addAttribute("cabang", rdExist.getCabang());
+                model.addAttribute("nama", rd.getNama());
+                // model.addAttribute("cabang", itemCabang.getCabang());
                 return "add-item";
+                // rdExist.setStok(rd.getStok() + rdExist.getStok());
+
+                // itemCabangRestService.createItemCabang(rdExist);
+ 
+                // Integer stok = mapItem.get(rd.getUuid()).getStok() - rd.getStok();
+                // itemCabangRestService.updateStok(rdExist.getUuidItem(), stok);
+ 
+                // model.addAttribute("nama", rdExist.getNama());
+                // model.addAttribute("cabang", rdExist.getCabang());
+                // return "add-item";
             }
             catch (NoSuchElementException e){
-                System.out.println("masuk belom ada");
+                System.out.println("masuk belom ada samsek di database");
                 // ResultDetail rdNew = new ResultDetail();
                 rd.setNama(mapItem.get(rd.getUuid()).getNama());
                 rd.setKategori(mapItem.get(rd.getUuid()).getKategori());
