@@ -46,6 +46,10 @@
                         <a th:if="${user.role.nama} != 'Kepala Retail'" class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Update</a>
                         <p th:if="${user.role.nama} == 'Kepala Retail'">-</p>
                     </td> -->
+                    <div style = "text-align: right;">
+                        <a class="btn btn-outline-info" href="/cabang/request">Proses Permintaan Pembukaan Cabang</a>
+                    </div>
+                    <br/>
                     <div th:if = "*{listCabang.size() != 0}">
                             <table class = "table">
                                 <thead>
