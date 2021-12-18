@@ -1,10 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>View All Cabang</title>
+    <object th:include = "fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include = "fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit&family=Ubuntu&display=swap" rel="stylesheet">
 </head>
+<style>
+    body {
+        background-color: #edf6f9;
+        font-family: 'Outfit', sans-serif;
+    }
+    #title {
+        font-size: 35px;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    #title2 {
+        font-size: 28px;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    #noItem {
+        font-size: 25px;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        text-align: center;
+    }
+</style>
 <body>
-$END$
+<nav th:replace= "fragments/fragment :: navbar('cabang')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2 id = "title">Daftar Permintaan Pembukaan Cabang </h2>
+                <!-- <td sec:authorize="hasAuthority('Manager Cabang')">
+                    <a th:if="${user.role.nama} != 'Kepala Retail'" class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Update</a>
+                    <p th:if="${user.role.nama} == 'Kepala Retail'">-</p>
+                </td> -->
+                <div th:if = "*{listCabang.size() != 0}">
+                    <table class = "table">
+                        <thead>
+                        <tr>
+                            <th> Nomor </th>
+                            <th> Id Cabang </th>
+                            <th> Nama Cabang </th>
+                            <th> Nomor Telepon </th>
+                            <th> Ukuran Cabang </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each = "cabang, iterationStatus : ${listCabang}"
+                            th:style = "${iterationStatus.even} ? 'font-weight: bold;'">
+                            <td th:text = "${iterationStatus.count}"></td>
+                            <td th:text = "${cabang.id}"></td>
+                            <td th:text = "${cabang.nama}"></td>
+                            <td th:text = "${cabang.noTelp}"></td>
+                            <td th:text = "${cabang.ukuran}"></td>
+                            <td>
+                                <form th:action="@{/cabang/request/} + ${cabang.id}" method="POST">
+                                    <div style="d-flex justify-content-between">
+                                        <button class="btn btn-sm btn-info" type="submit" name="accept">Setujui</button>
+                                        <button class="btn btn-sm btn-danger" type="submit" name="reject">Tolak</button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </form>
+                </div>
+
+                <div th:unless="*{listCabang.size() != 0}">
+                    <h2 th:text = "'There is no Cabang Requested yet.'"></h2>
+                </div>
+                <hr>
+            </div>
+            <br>
+            <div style = "text-align: center;">
+                <a class="btn btn-info" th:href="@{/cabang/viewall}">Back to List Cabang</a>
+                <a class="btn btn-outline-info" th:href="@{/}">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 </body>
 </html>
