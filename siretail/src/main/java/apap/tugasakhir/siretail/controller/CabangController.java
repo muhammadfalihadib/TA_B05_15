@@ -102,4 +102,42 @@ public class CabangController {
         return "delete-cabang";
     }
 
+    @GetMapping("/request")
+    public String listCabangRequest(Model model){
+        List<CabangModel> listCabang = cabangService.getListCabangRequest();
+        model.addAttribute("listCabang", listCabang);
+        return "viewall-permintaan-cabang";
+    }
+
+    @PostMapping(value = "/request/{id}", params = "accept")
+    public String acceptCabangRequest(
+            @PathVariable Integer id,
+            Model model)
+    {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserModel penanggungJawab = userService.findByUsername(username);
+        CabangModel cabang = cabangService.getCabangById(id);
+        cabang.setPenanggungJawab(penanggungJawab);
+        cabang.setStatus(2);
+        CabangModel cabangAccepted = cabangService.updateCabang(cabang);
+        model.addAttribute("cabang", cabangAccepted);
+        model.addAttribute("accepted", true);
+        return "request-cabang";
+    }
+
+    @PostMapping(value = "/request/{id}", params = "reject")
+    public String rejectCabangRequest(
+            @PathVariable Integer id,
+            Model model)
+    {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserModel penanggungJawab = userService.findByUsername(username);
+        CabangModel cabang = cabangService.getCabangById(id);
+        cabang.setPenanggungJawab(penanggungJawab);
+        cabang.setStatus(1);
+        CabangModel cabangRejected = cabangService.updateCabang(cabang);
+        model.addAttribute("cabang", cabangRejected);
+        model.addAttribute("rejected", true);
+        return "request-cabang";
+    }
 }

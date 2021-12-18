@@ -49,7 +49,8 @@
                     <p th:text="'Ukuran Cabang : ' + ${cabang.ukuran}"></p>
                     <p th:text="'Status Cabang : ' + ${cabang.status}"></p>
                     <p th:text="'Nomor Telepon : ' + ${cabang.noTelp}"></p>
-                    <p th:text="'Penanggung Jawab Cabang : ' + ${cabang.penanggungJawab.nama}"></p>
+                    <p th:if="${cabang.penanggungJawab != null}" th:text="'Penanggung Jawab Cabang : ' + ${cabang.penanggungJawab.nama}"></p>
+                    <p th:if="${cabang.penanggungJawab == null}" th:text="'Penanggung Jawab Cabang : -'"></p>
                 </div>
                 <div class="col">
                     <br>
