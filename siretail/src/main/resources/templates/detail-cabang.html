@@ -61,9 +61,14 @@
                         <br>
                         <a class="btn btn-outline-info" th:href="@{/item/increase/} + ${cabang.id}">Increase Item Stock</a>
                     </div>
+                    <div th:if="${errorMsg}">
+                        <br>
+                        <span style="color: red" th:text = "${errorMsg}"></span>
+                    </div>
                     <div th:if = "*{listItemCabang.size() != 0}">
                         <form th:action = "@{/item/delete}" th:object = "${cabang}" method = "POST">
                             <input type="hidden" th:field="*{id}">
+                            <input type="hidden" th:field="*{nama}">
                             <table class = "table">
                                 <br>
                                 <thead>
@@ -86,7 +91,7 @@
                                         </td>
                                         <td>
                                             <input class="form-check-input" type="checkbox" th:field="*{listItemCabang}"
-                                            th:value = "${itemCabang.id}" id = "flexCheckDefault">
+                                            th:value="${itemCabang.id}" id="flexCheckDefault">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -104,7 +109,7 @@
                 </div>
                 <br>
                 <a class="btn btn-info" href="/cabang/viewall">Back to Daftar Cabang</a>
-                <a class="btn btn-outline-info" href="/cabang/update">Update Cabang</a>
+                <a class="btn btn-outline-info" th:href="@{/cabang/update/} + ${cabang.id}">Update Cabang</a>
                 <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}">Delete Cabang</a>
             </div>
         </div>

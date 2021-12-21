@@ -45,3 +45,5 @@ build/
 
 ### VS Code ###
 .vscode/
+
+siretail/src/main/resources/application.properties

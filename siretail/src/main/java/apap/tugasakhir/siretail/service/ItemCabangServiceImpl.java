@@ -33,4 +33,9 @@ public class ItemCabangServiceImpl implements ItemCabangService {
     public List<ItemCabangModel> getListItemCabang(){
         return itemCabangDb.findAll();
     }
+
+    @Override
+    public void deleteItemCabang(Integer id){
+        itemCabangDb.deleteById(id);
+    }
 }

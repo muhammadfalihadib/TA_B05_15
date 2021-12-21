@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@Table(name = "userModel")
+@Table(name = "user_model")
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
