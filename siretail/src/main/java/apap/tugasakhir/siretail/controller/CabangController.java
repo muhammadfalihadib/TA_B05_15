@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -83,6 +84,25 @@ public class CabangController {
     @GetMapping("/viewall")
     public String listCabang(Model model){
         List<CabangModel> listCabang = cabangService.getListCabang();
+        List<CabangModel> listCabangPovManager = new ArrayList<>();
+        if (findCurrUser().getRole().getNama().equals("Manager Cabang")){
+            System.out.println("masuk role managercabang");
+            for (CabangModel cabang: listCabang){
+                String penanggungJawab = cabang.getPenanggungJawab().getNama();
+                if (penanggungJawab.equals(findCurrUser().getNama())){
+                    listCabangPovManager.add(cabang);
+                    System.out.println("masuk view all yang ada cabangnya");
+                    model.addAttribute("listCabangPovManager", listCabangPovManager);
+                    System.out.println(listCabangPovManager);
+                }
+                else{
+                    System.out.println("masuk view all yang ga ada cabangnya");
+                }
+            }
+            System.out.println(listCabangPovManager.size());
+            return "viewall-cabang-pov-manager";
+            
+        }
         model.addAttribute("listCabang", listCabang);
         return "viewall-cabang";
     }
