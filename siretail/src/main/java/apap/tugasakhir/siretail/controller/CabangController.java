@@ -58,6 +58,7 @@ public class CabangController {
 
     @PostMapping("/update")
     public String updateUserSubmitPage(@ModelAttribute CabangModel cabang, Model model) {
+        cabangService.updateCabang(cabang);
         model.addAttribute("cabang", cabang.getNama());
         return "update-cabang";
     }
@@ -77,7 +78,6 @@ public class CabangController {
         model.addAttribute("cabang", cabang);
         model.addAttribute("listItemCabang", listItemCabang);
         return "detail-cabang";
-
     }
 
     @GetMapping("/viewall")

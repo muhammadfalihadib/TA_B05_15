@@ -312,4 +312,24 @@ public class ItemCabangController {
         return "increase-item";
     }
 
+    @PostMapping(value="/delete")
+    public String deleteItem(
+            @ModelAttribute CabangModel cabang,
+            Model model
+    ){
+        if (cabang.getListItemCabang().size() == 0){
+            CabangModel cabangModel = cabangService.getCabangById(cabang.getId());
+            List<ItemCabangModel> listItemCabang = cabangModel.getListItemCabang();
+            model.addAttribute("cabang", cabangModel);
+            model.addAttribute("listItemCabang", listItemCabang);
+            model.addAttribute("errorMsg", "Mohon pilih minimal 1 item untuk dihapus");
+            return "detail-cabang";
+        }
+        for (ItemCabangModel item: cabang.getListItemCabang()){
+            itemCabangService.deleteItemCabang(item.getId());
+        }
+        model.addAttribute("cabang", cabang);
+        return "delete-item-cabang";
+    }
+
 }
