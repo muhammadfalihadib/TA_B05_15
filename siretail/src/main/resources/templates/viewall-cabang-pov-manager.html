@@ -1,3 +1,111 @@
+<!-- <!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>View All Cabang</title>
+    <object th:include = "fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include = "fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit&family=Ubuntu&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+        background-color: #edf6f9;
+        font-family: 'Outfit', sans-serif;
+    }
+    #title {
+        font-size: 35px;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    #title2 {
+        font-size: 28px;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    #noItem {
+        font-size: 25px;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        text-align: center;
+    }
+    #noCabang {
+        font-size: 25px;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        text-align: center;
+    }
+</style>
+<body>
+    <nav th:replace= "fragments/fragment :: navbar('cabang')"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                    <h2 id = "title">Daftar Cabang </h2>
+                    <div th:if = "*{listCabangPovManager?.size() > 0}">
+                            <table class = "table">
+                                <thead>
+                                    <tr>
+                                        <th> Nomor </th>
+                                        <th> Id Cabang </th>
+                                        <th> Nama Cabang </th>
+                                        <th> Nomor Telepon </th>
+                                        <th> Ukuran Cabang </th>
+                                        <th> Jumlah Item </th>
+                                        <th> Status Cabang </th>
+                                        <th> Detail Cabang </th>
+                                        <th sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
+                                            Hapus Cabang
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each = "cabang, iterationStatus : ${listCabangPovManager}"
+                                        th:style = "${iterationStatus.even} ? 'font-weight: bold;'">
+                                        <td th:text = "${iterationStatus.count}"></td>
+                                        <td th:text = "${cabang.id}"></td>
+                                        <td th:text = "${cabang.nama}"></td>
+                                        <td th:text = "${cabang.noTelp}"></td>
+                                        <td th:text = "${cabang.ukuran}"></td>
+                                        <td th:text = "${cabang.listItemCabang.size()}"></td>
+                                        <td th:if = "${cabang.status} == 0"> Menunggu Persetujuan </td>
+                                        <td th:if = "${cabang.status} == 1"> Ditolak </td>
+                                        <td th:if = "${cabang.status} == 2"> Disetujui </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Detail</a>
+                                        </td>
+                                        <td sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
+                                            <a class="btn btn-sm btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}">Hapus</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+    
+                    <div th:unless="*{listCabangPovManager?.size() > 0}">
+                        <h4 id = "noCabang" th:text = "'Anda belum pernah mendaftarkan Cabang.'"></h4>
+                    </div>
+                    <hr>
+                </div>
+                <br>
+                <div style = "text-align: center;">
+                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
+                    <a class="btn btn-info" th:href="@{/cabang/add}">Tambah Cabang</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html> -->
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
@@ -64,7 +172,7 @@
                                         <th> Jumlah Item </th>
                                         <th> Status Cabang </th>
                                         <th> Detail Cabang </th>
-                                        <th>
+                                        <th sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
                                             Hapus Cabang
                                         </th>
                                         <!-- <th> Update Cabang </th> -->
@@ -85,7 +193,7 @@
                                         <td>
                                             <a class="btn btn-sm btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Detail</a>
                                         </td>
-                                        <td>
+                                        <td sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
                                             <a class="btn btn-sm btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}">Hapus</a>
                                         </td>
                                     </tr>
@@ -93,20 +201,20 @@
                             </table>
                         </form>
                     </div>
-    
+
                     <div th:unless="*{listCabangPovManager?.size() > 0}">
-                        <h4 id = "noCabang" th:text = "'Anda belum pernah mendaftarkan Cabang.'"></h4>
+                        <h4 id = "noCabang" th:text = "'There is no Cabang yet.'"></h4>
                     </div>
                     <hr>
                 </div>
                 <br>
                 <div style = "text-align: center;">
-                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
-                    <a class="btn btn-info" th:href="@{/cabang/add}">Tambah Cabang</a>
+                    <a class="btn btn-info" th:href="@{/cabang/add}">Add Cabang</a>
+                    <a class="btn btn-outline-info" href="/">Back to Home</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 </body>
-</html>
+</html> 
