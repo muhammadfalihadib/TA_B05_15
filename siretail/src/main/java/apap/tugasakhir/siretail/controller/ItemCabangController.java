@@ -235,7 +235,13 @@ public class ItemCabangController {
     public String addPromoFormPage(@PathVariable("idCabang") String idCabang,
                                    @PathVariable("id") String id,
                                    Model model){
-        List<ResultCouponDetail> listCoupon = itemCabangRestService.getAllPromo().getResult();
+        List<ResultCouponDetail> listCoupon;
+        try {
+            listCoupon = itemCabangRestService.getAllPromo().getResult();
+        }
+        catch (NullPointerException e) {
+            listCoupon = new ArrayList<>();
+        }
         model.addAttribute("idCabang", idCabang);
         model.addAttribute("id", id);
         model.addAttribute("listCoupon", listCoupon);
