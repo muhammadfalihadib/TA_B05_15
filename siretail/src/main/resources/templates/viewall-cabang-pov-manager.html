@@ -64,7 +64,7 @@
                                         <th> Jumlah Item </th>
                                         <th> Status Cabang </th>
                                         <th> Detail Cabang </th>
-                                        <th sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
+                                        <th>
                                             Hapus Cabang
                                         </th>
                                         <!-- <th> Update Cabang </th> -->
@@ -85,7 +85,7 @@
                                         <td>
                                             <a class="btn btn-sm btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Detail</a>
                                         </td>
-                                        <td sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
+                                        <td>
                                             <a class="btn btn-sm btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}">Hapus</a>
                                         </td>
                                     </tr>
@@ -95,7 +95,7 @@
                     </div>
     
                     <div th:unless="*{listCabangPovManager?.size() > 0}">
-                        <h4 id = "noCabang" th:text = "'There is no Cabang yet.'"></h4>
+                        <h4 id = "noCabang" th:text = "'Anda belum pernah mendaftarkan Cabang.'"></h4>
                     </div>
                     <hr>
                 </div>
