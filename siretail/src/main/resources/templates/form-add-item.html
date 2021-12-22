@@ -26,13 +26,13 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2 id = "title">Add Item</h2>
+                <h2 id = "title">Tambah Item</h2>
                 <div th:if="${error}">
                     <span style="color: red" th:text = "${error}"></span>
                 </div>
                 <form th:action="@{/item/add/} + ${cabangId}" th:object="${listResultDetail}" method="POST">
                     <br>
-                    <button class="btn btn-primary" name="addRow">Add More Item</button>
+                    <button class="btn btn-primary" name="addRow">Tambah Item Lainnya</button>
                     <br>
                     <br>
                     <tr th:each="item, itemStat : *{resultDetailList}">
@@ -56,8 +56,8 @@
                     </tr>
                     <br>
                     <div style = "text-align:center;">
-                        <a class="btn btn-info" th:href="@{/cabang/view/} + ${cabangId}">Back to Detail Cabang</a>
-                        <button type="submit" class="btn btn-outline-info">Save Item</button>
+                        <a class="btn btn-outline-info" th:href="@{/cabang/view/} + ${cabangId}">Kembali ke Detail Cabang</a>
+                        <button type="submit" class="btn btn-info">Simpan</button>
                     </div>
                 </form>
             </div>

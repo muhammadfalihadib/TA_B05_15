@@ -27,7 +27,7 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2 id = "title">Update User</h2>
+                <h2 id = "title">Perbarui Pengguna</h2>
                 <form th:action="@{/user/update}" th:object="${user}" method="POST">
                     <input type="hidden" th:field="*{id}"/>
 
@@ -65,8 +65,8 @@
                         <div class="text-danger" th:text="${message}"></div>
                         <br>
                     </div>
+                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
                     <button type="submit" class="btn btn-info">Simpan</button>
-                    <a class="btn btn-info" href="/">Home</a>
                 </form>
             </div>
         </div>

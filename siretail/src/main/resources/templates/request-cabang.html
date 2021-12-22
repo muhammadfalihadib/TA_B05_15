@@ -26,12 +26,12 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2 th:if="${accepted}" th:text="'Requested cabang ' + ${cabang.nama} + ' is accepted'"></h2>
-                <h2 th:if="${rejected}" th:text="'Requested cabang ' + ${cabang.nama} + ' is rejected'"></h2>
+                <h2 th:if="${accepted}" th:text="'Permintaan Cabang ' + ${cabang.nama} + ' diterima.'"></h2>
+                <h2 th:if="${rejected}" th:text="'Permintaan Cabang ' + ${cabang.nama} + ' ditolak.'"></h2>
                 <br><hr>
                 <div style = "text-align:center;">
-                    <a class="btn btn-info" th:href="@{/cabang/view/} + ${cabang.id}">See Detail</a>
-                    <a class="btn btn-outline-info" th:href="@{/}">Back to List Cabang Request</a>
+                    <a class="btn btn-outline-info" th:href="@{/}">Menu Utama</a>
+                    <a class="btn btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Lihat Detail Cabang</a>
                 </div>
             </div>
         </div>

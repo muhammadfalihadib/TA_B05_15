@@ -46,14 +46,14 @@
     <nav th:replace= "fragments/fragment :: navbar('home')"></nav>
     <div class = "home">
         <br>
-        <h2 id = "name" th:text = "'Hello ' + ${user.nama}"></h2>
-        <h2 id = "name" th:text = "'as ' + ${user.role.nama} + '!'"></h2>
+        <h2 id = "name" th:text = "'Halo ' + ${user.nama}"></h2>
+        <h2 id = "name" th:text = "'sebagai ' + ${user.role.nama} + '!'"></h2>
         <h1 id = "title">- Welcome to SiRetail - </h1>
         <div id = "tombol">
-            <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href = "@{/user/add}">Add User</a>
-            <a type="button" class="btn btn-info" th:href = "@{/user/viewall}">View All User</a>
-            <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href = "@{/user/viewall}">Update User</a>
-            <a th:if="${user.role.nama == 'Manager Cabang'}" type="button" class="btn btn-info" th:href = "@{/user/viewall}">Update User</a>
+            <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href = "@{/user/add}">Tambah Pengguna</a>
+            <a type="button" class="btn btn-info" th:href = "@{/user/viewall}">Lihat Semua Pengguna</a>
+            <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href = "@{/user/viewall}">Perbarui Pengguna</a>
+            <a th:if="${user.role.nama == 'Manager Cabang'}" type="button" class="btn btn-info" th:href = "@{/user/viewall}">Perbarui Pengguna</a>
         </div>
         <br>
         <br>

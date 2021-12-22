@@ -93,14 +93,14 @@
                     </div>
     
                     <div th:unless="*{listCabang.size() != 0}">
-                        <h2 th:text = "'There is no Cabang yet.'"></h2>
+                        <h2 th:text = "'Tidak ada Cabang yang tersedia.'"></h2>
                     </div>
                     <hr>
                 </div>
                 <br>
                 <div style = "text-align: center;">
-                    <a class="btn btn-info" th:href="@{/cabang/add}">Add Cabang</a>
-                    <a class="btn btn-outline-info" href="/">Back to Home</a>
+                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
+                    <a class="btn btn-info" th:href="@{/cabang/add}">Tambah Cabang</a>
                 </div>
             </div>
         </div>

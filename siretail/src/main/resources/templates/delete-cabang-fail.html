@@ -27,13 +27,12 @@
         <div class="card-body">
             <div class="justify-content-center">
                 <h2 id = "title" th:text="'Data cabang ' + ${cabang.nama} +
-                         ' gagal dihapus karena masih terdapat Item di dalamnya'"></h2>
+                         ' gagal dihapus karena cabang tersebut masih memiliki item!'"></h2>
                 <br><hr>
                 <div style = "text-align:center;">
-                    <a class="btn btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Back to Detail Cabang</a>
-                    <a class="btn btn-outline-info" href="/cabang/viewall">Lihat Daftar Cabang</a>
-                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
-
+                    <a class="btn btn-outline-info" href="/cabang/viewall">Lihat Semua Cabang</a>
+                    <a class="btn btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Kembali ke Detail Cabang</a>
+                    <!-- <a class="btn btn-outline-info" href="/">Menu Utama</a> -->
                 </div>
             </div>
         </div>

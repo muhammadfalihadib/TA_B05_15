@@ -54,12 +54,12 @@
                 </div>
                 <div class="col">
                     <br>
-                    <h4 id = "title2">List Item Cabang: </h4>
-                    <a class="btn btn-info" th:href="@{/item/add/} + ${cabang.id}">Add Item</a>
+                    <h4 id = "title2">Daftar Item Cabang: </h4>
+                    <a class="btn btn-info" th:href="@{/item/add/} + ${cabang.id}">Tambah Item</a>
                     <br>
                     <div>
                         <br>
-                        <a class="btn btn-outline-info" th:href="@{/item/increase/} + ${cabang.id}">Increase Item Stock</a>
+                        <a class="btn btn-outline-info" th:href="@{/item/increase/} + ${cabang.id}">Naikkan Stok Item</a>
                     </div>
                     <div th:if="${errorMsg}">
                         <br>
@@ -103,14 +103,14 @@
                     </div>
     
                     <div th:unless="*{listItemCabang.size() != 0}">
-                        <h6 id = "noItem" th:text = "'There is no item here'"></h6>
+                        <h6 id = "noItem" th:text = "'Tidak ada item yang tersedia'"></h6>
                     </div>
                     <hr>
                 </div>
                 <br>
-                <a class="btn btn-info" href="/cabang/viewall">Back to Daftar Cabang</a>
-                <a class="btn btn-outline-info" th:href="@{/cabang/update/} + ${cabang.id}">Update Cabang</a>
-                <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}">Delete Cabang</a>
+                <a class="btn btn-outline-info" href="/cabang/viewall">Lihat Semua Cabang</a>
+                <a class="btn btn-info" th:href="@{/cabang/update/} + ${cabang.id}">Perbarui Cabang</a>
+                <a class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}">Hapus Cabang</a>
             </div>
         </div>
     </div>

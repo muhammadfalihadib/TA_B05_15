@@ -27,7 +27,7 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2 id = "title">Update Cabang</h2>
+                <h2 id = "title">Perbarui Cabang</h2>
                 <form th:action="@{/cabang/update}" th:object="${cabang}" method="POST">
                     <input type="hidden" th:field="*{id}"/>
                     <input type="hidden" th:field="*{status}"/>
@@ -45,8 +45,8 @@
                     <label>Ukuran cabang (dalam m2)</label>
                     <input type="text" class="form-control" th:field="*{ukuran}"/>
 
+                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
                     <button type="submit" class="btn btn-info">Simpan</button>
-                    <a class="btn btn-info" href="/">Home</a>
                 </form>
             </div>
         </div>

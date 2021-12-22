@@ -27,7 +27,7 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2 id = "title" class="mb-5 text-center font-weight-bold">Daftar User</h2>
+                <h2 id = "title" class="mb-5 text-center font-weight-bold">Daftar Pengguna</h2>
                 <table class="table">
                     <thead>
                     <tr>
@@ -44,10 +44,10 @@
                         <td th:text="${user.nama}"></td>
                         <td th:text="${user.role.nama}"></td>
                         <td sec:authorize="hasAuthority('Kepala Retail')">
-                            <a class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Update</a>
+                            <a class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Perbarui</a>
                         </td>
                         <td sec:authorize="hasAuthority('Manager Cabang')">
-                            <a th:if="${user.role.nama} != 'Kepala Retail'" class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Update</a>
+                            <a th:if="${user.role.nama} != 'Kepala Retail'" class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Perbarui</a>
                             <p th:if="${user.role.nama} == 'Kepala Retail'">-</p>
                         </td>
                         <td sec:authorize="hasAuthority('Staff Cabang')">

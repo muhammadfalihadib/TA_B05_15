@@ -26,13 +26,12 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2 id = "title" th:text="'Tolong pilih minimal 1 item untuk dihapus'"></h2>
+                <h2 id = "title" th:text="'Harap pilih minimal 1 item untuk dihapus!'"></h2>
                 <br><hr>
                 <div style = "text-align:center;">
-                    <a class="btn btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Back to Detail Cabang</a>
-                    <a class="btn btn-outline-info" href="/cabang/viewall">Lihat Daftar Cabang</a>
-                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
-
+                    <a class="btn btn-outline-info" href="/cabang/viewall">Lihat Semua Cabang</a>
+                    <a class="btn btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Kembali ke Detail Cabang</a>
+                    <!-- <a class="btn btn-outline-info" href="/">Menu Utama</a> -->
                 </div>
             </div>
         </div>
