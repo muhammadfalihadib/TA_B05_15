@@ -32,7 +32,7 @@
                 </div>
                 <form th:action="@{/item/add/} + ${cabangId}" th:object="${listResultDetail}" method="POST">
                     <br>
-                    <button class="btn btn-primary" name="addRow">Tambah Item Lainnya</button>
+                    <button class="btn btn-info" name="addRow">Tambah Item Lainnya</button>
                     <br>
                     <br>
                     <tr th:each="item, itemStat : *{resultDetailList}">
@@ -44,7 +44,7 @@
                             <br>
                         </td>
                         <td>
-                            <input class="form-control" type="number" th:field="*{resultDetailList[__${itemStat.index}__].stok}"/>
+                            <input placeholder = "Masukkan jumlah stok yang diinginkan" class="form-control" type="number" th:field="*{resultDetailList[__${itemStat.index}__].stok}"/>
                             <br>
                         </td>
                         <td>

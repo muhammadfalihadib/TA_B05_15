@@ -102,6 +102,12 @@ public class CabangController {
 
     @GetMapping("/viewall")
     public String listCabang(Model model){
+        // agar bisa di add attribute di html according to its role
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        UserModel userModel = userService.findByUsername(username);
+        
         List<CabangModel> listCabang = cabangService.getListCabang();
         List<CabangModel> listCabangPovManager = new ArrayList<>();
         if (findCurrUser().getRole().getNama().equals("Manager Cabang")){
@@ -125,6 +131,7 @@ public class CabangController {
             return "viewall-cabang-pov-manager";
             
         }
+        model.addAttribute("user", userModel);
         model.addAttribute("listCabang", listCabang);
         return "viewall-cabang";
     }
@@ -134,8 +141,14 @@ public class CabangController {
             Model model,
             @PathVariable Integer id
     ){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        UserModel userModel = userService.findByUsername(username);
+
         CabangModel cabang = cabangService.getCabangById(id);
         model.addAttribute("cabang", cabang);
+        model.addAttribute("user", userModel);
         List<ItemCabangModel> listItem = cabang.getListItemCabang();
         if (listItem.size() > 0){
             return "delete-cabang-fail";

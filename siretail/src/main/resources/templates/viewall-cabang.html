@@ -96,7 +96,9 @@
                 <br>
                 <div style = "text-align: center;">
                     <a class="btn btn-outline-info" href="/">Menu Utama</a>
-                    <a class="btn btn-info" th:href="@{/cabang/add}">Tambah Cabang</a>
+                    <a th:if="${user.role.nama == 'Manager Cabang'}" type="button" class="btn btn-info" th:href = "@{/cabang/add}">Tambah Cabang</a>
+                    <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href = "@{/cabang/add}">Tambah Cabang</a>
+                    <!-- <a class="btn btn-info" th:href="@{/cabang/add}">Tambah Cabang</a> -->
                 </div>
             </div>
         </div>
