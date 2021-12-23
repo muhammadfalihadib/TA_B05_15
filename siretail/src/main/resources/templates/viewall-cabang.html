@@ -42,12 +42,8 @@
         <div class="card-body">
             <div class="justify-content-center">
                     <h2 id = "title">Daftar Cabang </h2>
-                    <!-- <td sec:authorize="hasAuthority('Manager Cabang')">
-                        <a th:if="${user.role.nama} != 'Kepala Retail'" class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Update</a>
-                        <p th:if="${user.role.nama} == 'Kepala Retail'">-</p>
-                    </td> -->
                     <div style = "text-align: right;">
-                        <a class="btn btn-outline-info" href="/cabang/request">Proses Permintaan Pembukaan Cabang</a>
+                        <a class="btn btn-info" href="/cabang/request">Proses Permintaan Pembukaan Cabang</a>
                     </div>
                     <br/>
                     <div th:if = "*{listCabang.size() != 0}">
