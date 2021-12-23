@@ -148,8 +148,7 @@ public class ItemCabangController {
                     rd.setNama(mapItem.get(rd.getUuid()).getNama());
                     rd.setKategori(mapItem.get(rd.getUuid()).getKategori());
                     rd.setHarga(mapItem.get(rd.getUuid()).getHarga());
-                    
-                    // Ini kenapa gapake rdCheck aja yah yg di atas? -Ori
+
                     ItemCabangModel rdExistModel = new ItemCabangModel();
                     rdExistModel.setUuidItem(rd.getUuid());
                     rdExistModel.setNama(rd.getNama());

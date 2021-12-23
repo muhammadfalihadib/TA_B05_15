@@ -37,16 +37,16 @@
                     <br>
                     <tr th:each="item, itemStat : *{resultDetailList}">
                         <td>
-                            <select th:field="*{resultDetailList[__${itemStat.index}__].uuid}">
+                            <select class="form-select" th:field="*{resultDetailList[__${itemStat.index}__].uuid}">
                                 <option th:each="it : ${listItem}" th:value="${it.uuid}" th:text="${it.nama}">
                                 </option>
                             </select>
-                            <br>
                         </td>
+                        <br>
                         <td>
                             <input placeholder = "Masukkan jumlah stok yang diinginkan" class="form-control" type="number" th:field="*{resultDetailList[__${itemStat.index}__].stok}"/>
-                            <br>
                         </td>
+                        <br>
                         <td>
                             <button th:value="${itemStat.index}" class="btn btn-danger" type="submit"
                                     name="deleteRow">Hapus</button>
