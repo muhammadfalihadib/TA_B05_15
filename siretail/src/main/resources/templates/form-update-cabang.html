@@ -49,8 +49,12 @@
                     <label>Ukuran cabang (dalam m2)</label>
                     <input type="text" class="form-control" th:field="*{ukuran}"/>
                     <br>
-                    
-                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
+
+                    <div th:unless="${error} == null">
+                        <div class="text-danger" th:text="${error}"></div>
+                        <br>
+                    </div>
+                    <a class="btn btn-outline-info" th:href="@{/cabang/viewall}">Lihat Semua Cabang</a>
                     <button type="submit" class="btn btn-info">Simpan</button>
                 </form>
             </div>

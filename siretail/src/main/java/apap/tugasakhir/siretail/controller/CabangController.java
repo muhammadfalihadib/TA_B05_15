@@ -45,6 +45,18 @@ public class CabangController {
 
     @PostMapping("/add")
     public String addCabangSubmitPage(@ModelAttribute CabangModel cabang, Model model) {
+        if (cabang.getUkuran() <=0) {
+            model.addAttribute("error", "Ukuran tidak valid");
+            model.addAttribute("cabang", cabang);
+            return "form-add-cabang";
+        }
+        if ((!cabang.getNoTelp().matches("^(?=(?:[0]){1}).*"))
+                || (!cabang.getNoTelp().matches("^[0-9]*$"))
+        ) {
+            model.addAttribute("error", "nomor cabang tidak valid (contoh: 081197203519)");
+            model.addAttribute("cabang", cabang);
+            return "form-add-cabang";
+        }
         cabang.setPenanggungJawab(findCurrUser());
         cabang.setStatus(2);
         cabangService.addCabang(cabang);
@@ -68,6 +80,18 @@ public class CabangController {
 
     @PostMapping("/update")
     public String updateUserSubmitPage(@ModelAttribute CabangModel cabang, Model model) {
+        if (cabang.getUkuran() <=0) {
+            model.addAttribute("error", "Ukuran tidak valid");
+            model.addAttribute("cabang", cabang);
+            return "form-update-cabang";
+        }
+        if ((!cabang.getNoTelp().matches("^(?=(?:[0]){1}).*"))
+                || (!cabang.getNoTelp().matches("^[0-9]*$"))
+        ) {
+            model.addAttribute("error", "nomor cabang tidak valid (contoh: 081197203519)");
+            model.addAttribute("cabang", cabang);
+            return "form-update-cabang";
+        }
         cabangService.updateCabang(cabang);
         model.addAttribute("cabang", cabang.getNama());
         return "update-cabang";
