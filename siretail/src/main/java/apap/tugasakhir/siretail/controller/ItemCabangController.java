@@ -76,7 +76,7 @@ public class ItemCabangController {
             return "form-add-item";
         }
         System.out.println("bukan manager cabang itu atau role lain selain yg di permit");
-        return "no-cabang";
+        return "error/403";
     }
 
     @PostMapping("/add/{cabangId}")
