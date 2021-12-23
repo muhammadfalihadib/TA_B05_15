@@ -54,8 +54,15 @@ public class CabangController {
 
     @GetMapping("/update/{id}")
     public String updateUserFormPage(@PathVariable Integer id, Model model) {
+        // agar bisa di add attribute di html according to its role
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        UserModel userModel = userService.findByUsername(username);
+
         CabangModel cabang = cabangService.getCabangById(id);
         model.addAttribute("cabang", cabang);
+        model.addAttribute("user", userModel);
         return "form-update-cabang";
     }
 
@@ -71,6 +78,11 @@ public class CabangController {
         @PathVariable Integer id,
         Model model
     ){
+        // agar bisa di add attribute di html according to its role
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        UserModel userModel = userService.findByUsername(username);
 
         CabangModel cabang = cabangService.getCabangById(id);
         if (cabang == null || id == null){
@@ -80,6 +92,7 @@ public class CabangController {
         
         model.addAttribute("cabang", cabang);
         model.addAttribute("listItemCabang", listItemCabang);
+        model.addAttribute("user", userModel);
         return "detail-cabang";
     }
 
@@ -159,8 +172,15 @@ public class CabangController {
 
     @GetMapping("/request")
     public String listCabangRequest(Model model){
+        // agar bisa di add attribute di html according to its role
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        UserModel userModel = userService.findByUsername(username);
+
         List<CabangModel> listCabang = cabangService.getListCabangRequest();
         model.addAttribute("listCabang", listCabang);
+        model.addAttribute("user", userModel);
         return "viewall-permintaan-cabang";
     }
 

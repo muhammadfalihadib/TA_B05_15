@@ -39,14 +39,14 @@
                         Menu Utama<span class= "sr-only"></span>
                     </a>
                 </li>
-                <li th:class="${activeTab == 'cabang'}? 'font-weight-bold' : null">
-                    <a class="nav-item nav-link active text-secondary" th:href = "@{/cabang/viewall}">
-                    Cabang<span class= "sr-only"></span>
-                    </a>
-                </li>
                 <li th:class="${activeTab == 'user'}? 'font-weight-bold' : null">
                     <a class="nav-item nav-link active text-secondary" th:href = "@{/user/viewall}">
                     Pengguna<span class= "sr-only"></span>
+                    </a>
+                </li>
+                <li th:class="${activeTab == 'cabang'}? 'font-weight-bold' : null">
+                    <a class="nav-item nav-link active text-secondary" th:href = "@{/cabang/viewall}">
+                    Cabang<span class= "sr-only"></span>
                     </a>
                 </li>
             </ul>

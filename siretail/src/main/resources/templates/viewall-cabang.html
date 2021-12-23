@@ -43,7 +43,7 @@
             <div class="justify-content-center">
                     <h2 id = "title">Daftar Cabang </h2>
                     <div style = "text-align: right;">
-                        <a class="btn btn-info" href="/cabang/request">Proses Permintaan Pembukaan Cabang</a>
+                        <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href="@{/cabang/request/}">Proses Permintaan Pembukaan Cabang</a>
                     </div>
                     <br/>
                     <div th:if = "*{listCabang.size() != 0}">
