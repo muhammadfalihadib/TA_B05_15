@@ -60,6 +60,9 @@ public class ItemCabangController {
         String username = user.getUsername();
         UserModel userModel = userService.findByUsername(username);
         
+        if (cabang.getStatus() == 0 || cabang.getStatus() == 1){
+            return "status-cabang-failed";
+        }
         System.out.println(userModel.getRole());
         System.out.println(cabang.getPenanggungJawab().getUsername());
         System.out.println(userModel.getUsername());
