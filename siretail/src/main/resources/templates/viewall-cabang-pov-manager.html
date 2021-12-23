@@ -50,7 +50,7 @@
                     <h2 id = "title">Daftar Cabang </h2>
                     <div th:if = "*{listCabangPovManager?.size() > 0}">
                             <table class = "table">
-                                <thead>
+                                <thead style="text-align: center;">
                                     <tr>
                                         <th> Nomor </th>
                                         <th> Id Cabang </th>
@@ -65,7 +65,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody style = "text-align: center;">
                                     <tr th:each = "cabang, iterationStatus : ${listCabangPovManager}"
                                         th:style = "${iterationStatus.even} ? 'font-weight: bold;'">
                                         <td th:text = "${iterationStatus.count}"></td>

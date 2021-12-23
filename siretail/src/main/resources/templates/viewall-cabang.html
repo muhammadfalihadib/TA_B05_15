@@ -48,7 +48,7 @@
                     <br/>
                     <div th:if = "*{listCabang.size() != 0}">
                             <table class = "table">
-                                <thead>
+                                <thead style = "text-align: center;">
                                     <tr>
                                         <th> Nomor </th>
                                         <th> Id Cabang </th>
@@ -61,10 +61,9 @@
                                         <th sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
                                             Hapus Cabang
                                         </th>
-                                        <!-- <th> Update Cabang </th> -->
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody style = "text-align: center;">
                                     <tr th:each = "cabang, iterationStatus : ${listCabang}"
                                         th:style = "${iterationStatus.even} ? 'font-weight: bold;'">
                                         <td th:text = "${iterationStatus.count}"></td>

@@ -47,7 +47,9 @@
                     <p th:text="'Nama Cabang  : ' + ${cabang.nama}"></p>
                     <p th:text="'Alamat Cabang : ' + ${cabang.alamat}"></p>
                     <p th:text="'Ukuran Cabang : ' + ${cabang.ukuran}"></p>
-                    <p th:text="'Status Cabang : ' + ${cabang.status}"></p>
+                    <p th:if = "${cabang.status} == 0" th:text="'Status Cabang : Menunggu Persetujuan'"></p>
+                    <p th:if = "${cabang.status} == 1" th:text="'Status Cabang : Ditolak'"></p>
+                    <p th:if = "${cabang.status} == 2" th:text="'Status Cabang : Disetujui'"></p>
                     <p th:text="'Nomor Telepon : ' + ${cabang.noTelp}"></p>
                     <p th:if="${cabang.penanggungJawab != null}" th:text="'Penanggung Jawab Cabang : ' + ${cabang.penanggungJawab.nama}"></p>
                     <p th:if="${cabang.penanggungJawab == null}" th:text="'Penanggung Jawab Cabang : -'"></p>
