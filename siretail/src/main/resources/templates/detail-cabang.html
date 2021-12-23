@@ -58,8 +58,8 @@
                     <br>
                     <h4 id = "title2">Daftar Item Cabang: </h4>
                     <a class="btn btn-outline-info" th:href="@{/item/increase/} + ${cabang.id}">Naikkan Stok Item</a>
-                    <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href = "@{/cabang/add}">Tambah Cabang</a>
-                    <a th:if="${user.role.nama == 'Manager Cabang'}" type="button" class="btn btn-info" th:href = "@{/cabang/add}">Tambah Cabang</a>
+                    <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href = "@{/cabang/add}">Tambah Item</a>
+                    <a th:if="${user.role.nama == 'Manager Cabang'}" type="button" class="btn btn-info" th:href = "@{/cabang/add}">Tambah Item</a>
                     <br>
                     <div th:if="${errorMsg}">
                         <br>
@@ -115,8 +115,8 @@
                 <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href="@{/cabang/update/} + ${cabang.id}">Perbarui Cabang</a>
                 <a th:if="${user.role.nama == 'Manager Cabang'}" type="button" class="btn btn-info" th:href="@{/cabang/update/} + ${cabang.id}">Perbarui Cabang</a>
                 
-                <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href="@{/cabang/delete/} + ${cabang.id}">Hapus Cabang</a>
-                <a th:if="${user.role.nama == 'Manager Cabang'}" type="button" class="btn btn-info" th:href="@{/cabang/delete/} + ${cabang.id}">Hapus Cabang</a>
+                <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}">Hapus Cabang</a>
+                <a th:if="${user.role.nama == 'Manager Cabang'}" type="button" class="btn btn-danger" th:href="@{/cabang/delete/} + ${cabang.id}">Hapus Cabang</a>
                 
             </div>
         </div>
