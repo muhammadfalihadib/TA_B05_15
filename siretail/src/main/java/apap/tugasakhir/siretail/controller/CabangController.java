@@ -83,6 +83,23 @@ public class CabangController {
         return "detail-cabang";
     }
 
+    @GetMapping("/view")
+    public String viewDetailCabangPageRequestParam(
+        @RequestParam Integer idCabang,
+        Model model
+    ){
+
+        CabangModel cabang = cabangService.getCabangById(idCabang);
+        if (cabang == null || idCabang == null){
+            return "no-cabang";
+        }
+        List<ItemCabangModel> listItemCabang = cabang.getListItemCabang();
+        
+        model.addAttribute("cabang", cabang);
+        model.addAttribute("listItemCabang", listItemCabang);
+        return "detail-cabang";
+    }
+
     @GetMapping("/viewall")
     public String listCabang(Model model){
         List<CabangModel> listCabang = cabangService.getListCabang();

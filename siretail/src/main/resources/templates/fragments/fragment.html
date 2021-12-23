@@ -36,7 +36,7 @@
             <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
                 <li th:class="${activeTab == 'home'}? 'font-weight-bold' : null">
                     <a class="nav-item nav-link active text-secondary" th:href = "@{/}">
-                        Home<span class= "sr-only"></span>
+                        Menu Utama<span class= "sr-only"></span>
                     </a>
                 </li>
                 <li th:class="${activeTab == 'cabang'}? 'font-weight-bold' : null">
@@ -47,11 +47,11 @@
             </ul>
             <form class = "form-inline my-2 my-lg-0" th:action = "@{/cabang/view}" method = "GET" sec:authorize="isAuthenticated()">
                 <input class = "form-control mr-sm-2" type="search"
-                    name="noCabang" placeholder= "No Cabang" aria-label="Search">
-                <button clas = "btn btn-outline-primary my-2 my-sm-0" type = "submit"> Search </button>
+                    name="idCabang" placeholder= "Id Cabang" aria-label="Search">
+                <button clas = "btn btn-outline-primary my-2 my-sm-0" type = "submit"> Cari </button>
             </form>
             <ul class = "navbar-nav pull-right" sec:authorize="isAuthenticated()">
-                <a class = "nav-item nav-link active" style = "color: red; font-weight: bold;"th:href = "@{/logout}">Logout</a>
+                <a class = "nav-item nav-link active" style = "color: red; font-weight: bold;"th:href = "@{/logout}">Keluar</a>
             </ul>
         </div>
     </nav>
