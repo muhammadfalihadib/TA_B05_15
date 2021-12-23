@@ -60,7 +60,7 @@ public class CabangController {
         cabang.setPenanggungJawab(findCurrUser());
         cabang.setStatus(2);
         cabangService.addCabang(cabang);
-        model.addAttribute("cabang", cabang.getNama());
+        model.addAttribute("cabang", cabang);
         return "add-cabang";
     }
 
@@ -93,7 +93,7 @@ public class CabangController {
             return "form-update-cabang";
         }
         cabangService.updateCabang(cabang);
-        model.addAttribute("cabang", cabang.getNama());
+        model.addAttribute("cabang", cabang);
         return "update-cabang";
     }
 
