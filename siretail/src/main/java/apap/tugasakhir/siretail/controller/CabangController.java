@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Null;
+
 @Controller
 @RequestMapping("/cabang")
 public class CabangController {
@@ -88,6 +90,9 @@ public class CabangController {
         if (findCurrUser().getRole().getNama().equals("Manager Cabang")){
             System.out.println("masuk role managercabang");
             for (CabangModel cabang: listCabang){
+                if (cabang.getPenanggungJawab() == null){
+                    continue;
+                }
                 String penanggungJawab = cabang.getPenanggungJawab().getNama();
                 if (penanggungJawab.equals(findCurrUser().getNama())){
                     listCabangPovManager.add(cabang);
