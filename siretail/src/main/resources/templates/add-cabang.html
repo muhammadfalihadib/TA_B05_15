@@ -26,7 +26,7 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2 id = "title" th:text="'Cabang ' + ${cabang} + ' berhasil ditambahkan!'"></h2>
+                <h2 id = "title" th:text="'Cabang ' + ${cabang.nama} + ' berhasil ditambahkan!'"></h2>
                 <br><hr>
                 <div style = "text-align:center;">
                     <a class="btn btn-outline-info" th:href="@{/cabang/add}">Tambah Cabang Lainnya</a>
