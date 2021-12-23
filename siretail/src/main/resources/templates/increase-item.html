@@ -29,8 +29,9 @@
                 <h2 id = "title" th:text="'Permintaan untuk menaikan stok item  ' + ${name} + ' dengan id '+ ${id} +' berhasil dikirim.'"></h2>
                 <br><hr>
                 <div style = "text-align:center;">
-                    <a class="btn btn-outline-info" href="/cabang/viewall">Lihat Semua Cabang</a>
                     <a class="btn btn-info" th:href="@{/cabang/view/} + ${cabang}">Kembali ke Detail Cabang</a>
+                    <a class="btn btn-outline-info" href="/cabang/viewall">Lihat Semua Cabang</a>
+                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
                 </div>
             </div>
         </div>

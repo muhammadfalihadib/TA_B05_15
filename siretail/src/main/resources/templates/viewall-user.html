@@ -28,13 +28,20 @@
         <div class="card-body">
             <div class="justify-content-center">
                 <h2 id = "title" class="mb-5 text-center font-weight-bold">Daftar Pengguna</h2>
+                <div style = "text-align: right;">
+                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
+                    <a sec:authorize="hasAuthority('Kepala Retail')" type="button" class="btn btn-info" th:href = "@{/user/add}">Tambah Pengguna</a>
+                </div>
+                <br>
                 <table class="table">
                     <thead>
                     <tr>
                         <th>No</th>
                         <th>Nama User</th>
                         <th>Role</th>
-                        <th>Action</th>
+                        <div sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
+                            <th>Action</th>
+                        </div>
                     </tr>
                     </thead>
                     <tbody>
@@ -43,16 +50,15 @@
                         <td th:text="${iterationStatus.count}"></td>
                         <td th:text="${user.nama}"></td>
                         <td th:text="${user.role.nama}"></td>
-                        <td sec:authorize="hasAuthority('Kepala Retail')">
-                            <a class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Perbarui</a>
-                        </td>
-                        <td sec:authorize="hasAuthority('Manager Cabang')">
-                            <a th:if="${user.role.nama} != 'Kepala Retail'" class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Perbarui</a>
-                            <p th:if="${user.role.nama} == 'Kepala Retail'">-</p>
-                        </td>
-                        <td sec:authorize="hasAuthority('Staff Cabang')">
-                            <p>-</p>
-                        </td>
+                        <div sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')">
+                            <td sec:authorize="hasAuthority('Kepala Retail')">
+                                <a class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Perbarui</a>
+                            </td>
+                            <td sec:authorize="hasAuthority('Manager Cabang')">
+                                <a th:if="${user.role.nama} != 'Kepala Retail'" class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Perbarui</a>
+                                <p th:if="${user.role.nama} == 'Kepala Retail'">-</p>
+                            </td>
+                        </div>
                     </tr>
                     </tbody>
                 </table>

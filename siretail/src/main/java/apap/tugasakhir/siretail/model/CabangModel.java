@@ -24,7 +24,6 @@ import java.io.Serializable;
 @Getter
 @Entity
 @Table(name = "cabang")
-
 @JsonIgnoreProperties(value={"listItemCabang"}, allowSetters = true)
 public class CabangModel implements Serializable{
     

@@ -37,6 +37,11 @@
                     <label>Password</Label>
                     <input type="password" name="password" class="form-control"/>
                     <br>
+                    <div th:unless="${errorMessages} == null">
+                        <div  th:each="error : ${errorMessages}">
+                            <p style="color: red" th:text="${error}"></p>
+                        </div>
+                    </div>
                     <label>Role</label>
                     <select name="role" class="form-control">
                         <option selected value="">--pilih role--</option>
@@ -46,12 +51,9 @@
                         </option>>
                     </select>
                     <br>
-                    <div th:unless="${message} == null">
-                        <div class="text-danger" th:text="${message}"></div>
-                        <br>
-                    </div>
-                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
+                    <a class="btn btn-outline-info" th:href="@{/user/viewall}">Lihat Semua User</a>
                     <button type="submit" class="btn btn-info">Simpan</button>
+                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
                 </form>
             </div>
         </div>

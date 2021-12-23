@@ -48,6 +48,10 @@
         <div class="card-body">
             <div class="justify-content-center">
                     <h2 id = "title">Daftar Cabang </h2>
+                    <div style = "text-align: right;">
+                        <a class="btn btn-outline-info" href="/">Menu Utama</a>
+                        <a class="btn btn-info" th:href="@{/cabang/add}">Tambah Cabang</a>
+                    </div>
                     <div th:if = "*{listCabangPovManager?.size() > 0}">
                             <table class = "table">
                                 <thead style="text-align: center;">
@@ -93,11 +97,6 @@
                         <h4 id = "noCabang" th:text = "'Anda belum pernah mendaftarkan Cabang.'"></h4>
                     </div>
                     <hr>
-                </div>
-                <br>
-                <div style = "text-align: center;">
-                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
-                    <a class="btn btn-info" th:href="@{/cabang/add}">Tambah Cabang</a>
                 </div>
             </div>
         </div>
