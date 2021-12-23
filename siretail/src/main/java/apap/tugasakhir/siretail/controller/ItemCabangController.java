@@ -64,6 +64,7 @@ public class ItemCabangController {
         
         System.out.println(userModel.getRole());
         if (cabang.getPenanggungJawab().getUsername().equals(userModel.getNama()) || userModel.getRole().getNama().equals("Kepala Retail")){
+            System.out.println("masuk role manager cabang yang diminta or dia kepala retail.");
             arrResult = itemCabangRestService.getAllItemCabang().getResult();
             ListResultDetail listResultDetail = new ListResultDetail();
             listResultDetail.setResultDetailList(new ArrayList<>());
@@ -73,6 +74,7 @@ public class ItemCabangController {
             model.addAttribute("listResultDetail",listResultDetail);
             return "form-add-item";
         }
+        System.out.println("bukan manager cabang itu atau role lain selain yg di permit");
         return "error/403";
     }
 
