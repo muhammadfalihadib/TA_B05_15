@@ -28,18 +28,24 @@
         <div class="card-body">
             <div class="justify-content-center">
                 <h2 id = "title">Perbarui Pengguna</h2>
+                <br>
                 <form th:action="@{/user/update}" th:object="${user}" method="POST">
                     <input type="hidden" th:field="*{id}"/>
 
                     <label>User Name</label>
                     <input type="text" class="form-control" th:field="*{username}"/>
-
+                    <br>
                     <label>Nama</label>
                     <input type="text" class="form-control" th:field="*{nama}"/>
-
+                    <br>
                     <label>Password</Label>
                     <input type="password" class="form-control" th:field="*{password}"/>
-
+                    <br>
+                    <div th:unless="${errorMessages} == null">
+                        <div  th:each="error : ${errorMessages}">
+                            <p style="color: red" th:text="${error}"></p>
+                        </div>
+                    </div>
                     <label>Role</label>
                     <div sec:authorize="hasAuthority('Kepala Retail')">
                         <select class="form-control" th:field="*{role}">
@@ -61,12 +67,9 @@
                         </select>
                     </div>
                     <br>
-                    <div th:unless="${message} == null">
-                        <div class="text-danger" th:text="${message}"></div>
-                        <br>
-                    </div>
-                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
+                    <a class="btn btn-outline-info" th:href="@{/user/viewall}">Lihat Semua User</a>
                     <button type="submit" class="btn btn-info">Simpan</button>
+                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
                 </form>
             </div>
         </div>

@@ -30,8 +30,9 @@
                 <h2 th:if="${rejected}" th:text="'Permintaan Cabang ' + ${cabang.nama} + ' ditolak.'"></h2>
                 <br><hr>
                 <div style = "text-align:center;">
-                    <a class="btn btn-outline-info" th:href="@{/}">Menu Utama</a>
                     <a class="btn btn-info" th:href="@{/cabang/view/} + ${cabang.id}">Lihat Detail Cabang</a>
+                    <a class="btn btn-outline-info" th:href="@{/cabang/viewall}">Lihat Semua Cabang</a>
+                    <a class="btn btn-outline-info" th:href="@{/}">Menu Utama</a>
                 </div>
             </div>
         </div>

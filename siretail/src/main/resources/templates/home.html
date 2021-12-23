@@ -62,8 +62,6 @@
         <div id = "tombol">
             <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href = "@{/user/add}">Tambah Pengguna</a>
             <a type="button" class="btn btn-info" th:href = "@{/user/viewall}">Lihat Semua Pengguna</a>
-            <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href = "@{/user/viewall}">Perbarui Pengguna</a>
-            <a th:if="${user.role.nama == 'Manager Cabang'}" type="button" class="btn btn-info" th:href = "@{/user/viewall}">Perbarui Pengguna</a>
         </div>
         <div id = "tombol2">
             <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-dark btn-lg" th:href = "@{/cabang/add}">Tambah Cabang</a>

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -48,19 +49,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean isValidPassword(String password) {
+    public List<String> isValidPassword(String password) {
+        List<String> errorMessages = new ArrayList<>();
         Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
-        Pattern UpperCasePatten = Pattern.compile("[A-Z ]");
+        Pattern upperCasePatten = Pattern.compile("[A-Z ]");
         Pattern lowerCasePatten = Pattern.compile("[a-z ]");
         Pattern digitCasePatten = Pattern.compile("[0-9 ]");
 
-        if (password.length() < 8 ||
-                !specailCharPatten.matcher(password).find() ||
-                !UpperCasePatten.matcher(password).find() ||
-                !lowerCasePatten.matcher(password).find() ||
-                !digitCasePatten.matcher(password).find()
-        ) return false;
-        return true;
+//        if (password.length() < 8 ||
+//                !specailCharPatten.matcher(password).find() ||
+//                !UpperCasePatten.matcher(password).find() ||
+//                !lowerCasePatten.matcher(password).find() ||
+//                !digitCasePatten.matcher(password).find()
+//        ) return false;
+        if (password.length() < 8){
+            errorMessages.add("Panjangnya harus lebih dari 8");
+        } if (!specailCharPatten.matcher(password).find()){
+            errorMessages.add("Harus mengandung simbol");
+        } if (!upperCasePatten.matcher(password).find()){
+            errorMessages.add("Harus mengandung huruf kapital");
+        } if (!lowerCasePatten.matcher(password).find()){
+            errorMessages.add("Harus mengandung huruf kecil");
+        } if (!digitCasePatten.matcher(password).find()){
+            errorMessages.add("Harus mengandung angka");
+        }
+        return errorMessages;
     }
 
     @Override

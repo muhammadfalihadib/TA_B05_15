@@ -43,9 +43,11 @@
             <div class="justify-content-center">
                     <h2 id = "title">Daftar Cabang </h2>
                     <div style = "text-align: right;">
-                        <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href="@{/cabang/request/}">Proses Permintaan Pembukaan Cabang</a>
+                        <a class="btn btn-outline-info" href="/">Menu Utama</a>
+                        <a sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')" type="button" class="btn btn-info" th:href = "@{/cabang/add}">Tambah Cabang</a>
+                        <a sec:authorize="hasAuthority('Kepala Retail')" type="button" class="btn btn-info" th:href="@{/cabang/request/}">Proses Permintaan Pembukaan Cabang</a>
                     </div>
-                    <br/>
+                    <br>
                     <div th:if = "*{listCabang.size() != 0}">
                             <table class = "table">
                                 <thead style = "text-align: center;">
@@ -91,13 +93,6 @@
                         <h2 th:text = "'Tidak ada Cabang yang tersedia.'"></h2>
                     </div>
                     <hr>
-                </div>
-                <br>
-                <div style = "text-align: center;">
-                    <a class="btn btn-outline-info" href="/">Menu Utama</a>
-                    <a th:if="${user.role.nama == 'Manager Cabang'}" type="button" class="btn btn-info" th:href = "@{/cabang/add}">Tambah Cabang</a>
-                    <a th:if="${user.role.nama == 'Kepala Retail'}" type="button" class="btn btn-info" th:href = "@{/cabang/add}">Tambah Cabang</a>
-                    <!-- <a class="btn btn-info" th:href="@{/cabang/add}">Tambah Cabang</a> -->
                 </div>
             </div>
         </div>

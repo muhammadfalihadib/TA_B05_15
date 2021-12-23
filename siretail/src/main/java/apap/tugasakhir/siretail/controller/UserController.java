@@ -34,8 +34,9 @@ public class UserController {
             @ModelAttribute UserModel user,
             Model model
     ) {
-        if (!userService.isValidPassword(user.getPassword())) {
-            model.addAttribute("message", "Pengisian password tidak sesuai ketentuan.");
+        List<String> errorMessages = userService.isValidPassword(user.getPassword());
+        if (errorMessages.size() > 0) {
+            model.addAttribute("errorMessages", errorMessages);
             model.addAttribute("user", user);
             List<RoleModel> listRole = roleService.getListRole();
             model.addAttribute("listRole", listRole);
@@ -66,6 +67,14 @@ public class UserController {
             @ModelAttribute UserModel user,
             Model model
     ){
+        List<String> errorMessages = userService.isValidPassword(user.getPassword());
+        if (errorMessages.size() > 0) {
+            model.addAttribute("errorMessages", errorMessages);
+            model.addAttribute("user", user);
+            List<RoleModel> listRole = roleService.getListRole();
+            model.addAttribute("listRole", listRole);
+            return "form-update-user";
+        }
         UserModel updatedUser = userService.updateUser(user);
         model.addAttribute("username", updatedUser.getUsername());
         return "update-user";

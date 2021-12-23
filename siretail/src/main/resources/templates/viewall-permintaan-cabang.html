@@ -42,6 +42,11 @@
         <div class="card-body">
             <div class="justify-content-center">
                 <h2 id = "title">Daftar Permintaan Pembukaan Cabang </h2>
+                <div style = "text-align:right;">
+                    <a class="btn btn-outline-info" th:href="@{/}">Menu Utama</a>
+                    <a class="btn btn-info" th:href="@{/cabang/viewall}">Lihat Semua Cabang</a>
+                </div>
+                <br>
                 <!-- <td sec:authorize="hasAuthority('Manager Cabang')">
                     <a th:if="${user.role.nama} != 'Kepala Retail'" class="btn btn-info" th:href="@{/user/update/} + ${user.id}">Update</a>
                     <p th:if="${user.role.nama} == 'Kepala Retail'">-</p>
@@ -84,11 +89,6 @@
                     <h2 th:text = "'Tidak ada Permintaan Pembukaan Cabang yang tersedia.'"></h2>
                 </div>
                 <hr>
-            </div>
-            <br>
-            <div style = "text-align:center;">
-                <a class="btn btn-outline-info" th:href="@{/}">Menu Utama</a>
-                <a class="btn btn-info" th:href="@{/cabang/viewall}">Lihat Semua Cabang</a>
             </div>
         </div>
     </div>
