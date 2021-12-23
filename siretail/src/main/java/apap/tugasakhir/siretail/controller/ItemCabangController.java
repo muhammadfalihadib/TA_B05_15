@@ -50,11 +50,9 @@ public class ItemCabangController {
     private UserService userService;
 
     List<ResultDetail> arrResult;
-    // List<ResultDetail> arrResultNew; 
 
     @GetMapping("/add/{cabangId}")
     public String addItemToCabang(@PathVariable Integer cabangId, Model model){
-        //ItemCabangModel itemCabang = new ItemCabangModel();
 
         CabangModel cabang = cabangService.getCabangById(cabangId);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -63,7 +61,10 @@ public class ItemCabangController {
         UserModel userModel = userService.findByUsername(username);
         
         System.out.println(userModel.getRole());
-        if (cabang.getPenanggungJawab().getUsername().equals(userModel.getNama()) || userModel.getRole().getNama().equals("Kepala Retail")){
+        System.out.println(cabang.getPenanggungJawab().getUsername());
+        System.out.println(userModel.getUsername());
+        System.out.println(cabang.getPenanggungJawab().getUsername().equals(userModel.getUsername()));
+        if (cabang.getPenanggungJawab().getUsername().equals(userModel.getUsername()) || userModel.getRole().getNama().equals("Kepala Retail")){
             System.out.println("masuk role manager cabang yang diminta or dia kepala retail.");
             arrResult = itemCabangRestService.getAllItemCabang().getResult();
             ListResultDetail listResultDetail = new ListResultDetail();
@@ -75,7 +76,7 @@ public class ItemCabangController {
             return "form-add-item";
         }
         System.out.println("bukan manager cabang itu atau role lain selain yg di permit");
-        return "error/403";
+        return "no-cabang";
     }
 
     @PostMapping("/add/{cabangId}")
@@ -116,12 +117,6 @@ public class ItemCabangController {
                 CabangModel cabang = cabangService.getCabangById(cabangId);
                 rdCheck.setCabang(cabang);
                 ItemCabangModel rdExist = null;
-                // for (ItemCabangModel itemCek : cabang.getListItemCabang()){
-                //     if (rdCheck.getUuidItem().equals(itemCek.getUuidItem())) {
-                //         rdExist = itemCek;
-                //         break;
-                //     }
-                // }
                 
                 for (ItemCabangModel itemCek : itemCabangRestService.retrieveListItemCabang()){
                     if (rdCheck.getCabang().getId().equals(itemCek.getCabang().getId())
@@ -134,16 +129,15 @@ public class ItemCabangController {
 
                 if (rdExist != null && rdExist.getCabang().getId().equals(cabangId)){
                     System.out.println("masuk udh ada pada cabang tersebut");
+                    rd.setNama(mapItem.get(rd.getUuid()).getNama());
                     rdExist.setStok(rd.getStok() + rdExist.getStok());
 
                     itemCabangRestService.createItemCabang(rdExist);
 
                     Integer stok = mapItem.get(rd.getUuid()).getStok() - rd.getStok();
                     itemCabangRestService.updateStok(rdExist.getUuidItem(), stok);
-    
-                    model.addAttribute("nama", rdExist.getNama());
-                    // model.addAttribute("cabang", rdExist.getCabang());
-                    // return "add-item";
+                    
+                    model.addAttribute("nama", rd.getNama());
                 }
                 else{
                     System.out.println("masuk blm ada pada cabang tersebut");
@@ -166,9 +160,8 @@ public class ItemCabangController {
                     itemCabangRestService.updateStok(rd.getUuid(), stok);
     
                     model.addAttribute("nama", rd.getNama());
-                // model.addAttribute("cabang", itemCabang.getCabang());
-                // return "add-item";
                 }
+                model.addAttribute("cabang", cabang);
             }
             catch (NoSuchElementException e){
                 System.out.println("masuk belom ada samsek di database");
@@ -190,10 +183,14 @@ public class ItemCabangController {
                 itemCabangRestService.updateStok(rd.getUuid(), stok);
  
                 model.addAttribute("nama", rd.getNama());
-                // model.addAttribute("cabang", itemCabang.getCabang());
-                // return "add-item";
+                model.addAttribute("cabang", cabangService.getCabangById(cabangId));
             }
         }
+        System.out.println(listResultDetail.getResultDetailList());
+        for (ResultDetail i: listResultDetail.getResultDetailList()){
+            System.out.println(i.getNama());
+        }
+        model.addAttribute("resultDetail", listResultDetail.getResultDetailList());
         return "add-item";
     }
 
@@ -203,8 +200,6 @@ public class ItemCabangController {
             @ModelAttribute ListResultDetail listResultDetail,
             Model model
     ){
-//        System.out.println(listResultDetail.getResultDetailList().get(0).getNama());
-//        System.out.println(listResultDetail.getResultDetailList().get(0).getUuid());
         if (listResultDetail.getResultDetailList() == null || listResultDetail.getResultDetailList().size() == 0) {
             listResultDetail.setResultDetailList(new ArrayList<>());
         }

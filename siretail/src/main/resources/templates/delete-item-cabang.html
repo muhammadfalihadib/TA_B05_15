@@ -26,12 +26,13 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2 id = "title" th:text="'Data item cabang berikut dari ' + ${cabang.nama} + ' berhasil dihapus.'">Test</h2>
-                <h3>
+                <h2 id = "title" th:text="'Data item cabang berikut dari ' + ${cabang.nama} + ' berhasil dihapus.'"></h2>
+                <br>
+                <h5>
                     <ul th:each = "item , iterationStatus : ${cabang.listItemCabang}">
                         <li th:text = "${item.nama}"></li>
                     </ul>
-                </h3>
+                </h5>
                 <br><hr>
                 <div style = "text-align:center;">
                     <a class="btn btn-outline-info" href="/cabang/viewall">Lihat Semua Cabang</a>

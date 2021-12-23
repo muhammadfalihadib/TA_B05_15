@@ -26,8 +26,15 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <!-- <h2 id = "title" th:text="'Item ' + ${nama} + ' is successfully added!'"></h2> -->
-                <h2 id = "title" th:text="'List item berhasil ditambahkan!'"></h2>
+                <h2 id = "title" th:text="'Data item cabang berikut dari ' + ${cabang.nama} + ' berhasil ditambahkan.'"></h2>
+                <br>
+                <h5>
+                    <ul th:each = "item , iterationStatus : ${resultDetail}">
+                        <li th:text = "${item.nama}"></li>
+                    </ul>
+                </h5>
+                <br>
+                <h5 style = "text-align:center;">Catatan: Jika item tersebut sudah ada pada Cabang, maka stok item akan bertambah.</h5>
                 <br><hr>
                 <div style = "text-align:center;">
                     <a class="btn btn-outline-info" th:href="@{/cabang/viewall}">Lihat Semua Cabang</a>

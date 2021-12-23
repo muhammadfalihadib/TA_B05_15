@@ -1,7 +1,6 @@
 package apap.tugasakhir.siretail.service;
 
 import apap.tugasakhir.siretail.model.ItemCabangModel;
-import apap.tugasakhir.siretail.model.ListResultDetail;
 import apap.tugasakhir.siretail.rest.CouponDetail;
 import apap.tugasakhir.siretail.rest.ItemDetail;
 import apap.tugasakhir.siretail.rest.PostItemDetail;
@@ -21,6 +20,5 @@ public interface ItemCabangRestService {
     ItemCabangModel updateItemCabang(ItemCabangModel itemCabang);
     void updateStok(String uuid, Integer stok);
     ResultDetail getItemCabangByUuidResult(String uuid);
-    // ResultDetail createItemCabangRd(ResultDetail rd);
     String postIncreaseItem(PostItemDetail item);
 }
