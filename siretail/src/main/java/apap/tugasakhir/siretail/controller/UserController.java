@@ -41,6 +41,12 @@ public class UserController {
             List<RoleModel> listRole = roleService.getListRole();
             model.addAttribute("listRole", listRole);
             return "form-add-user";
+        } else if (!userService.isValidUsername(user.getUsername())) {
+            model.addAttribute("usernameMessages", "Username sudah digunakan");
+            model.addAttribute("user", user);
+            List<RoleModel> listRole = roleService.getListRole();
+            model.addAttribute("listRole", listRole);
+            return "form-add-user";
         }
         userService.addUser(user);
         model.addAttribute("username", user.getUsername());
@@ -70,6 +76,12 @@ public class UserController {
         List<String> errorMessages = userService.isValidPassword(user.getPassword());
         if (errorMessages.size() > 0) {
             model.addAttribute("errorMessages", errorMessages);
+            model.addAttribute("user", user);
+            List<RoleModel> listRole = roleService.getListRole();
+            model.addAttribute("listRole", listRole);
+            return "form-update-user";
+        } else if (!userService.isValidUsername(user.getUsername())) {
+            model.addAttribute("usernameMessages", "Username sudah digunakan");
             model.addAttribute("user", user);
             List<RoleModel> listRole = roleService.getListRole();
             model.addAttribute("listRole", listRole);
