@@ -84,7 +84,7 @@ public class ItemCabangRestServiceImpl implements ItemCabangRestService {
 
     @Override
     public CouponDetail getAllPromo() {
-        return this.webClientCoupon.get().uri("/rest/coupon").retrieve().bodyToMono(CouponDetail.class).block();
+        return this.webClientCoupon.get().uri("/api/coupon").retrieve().bodyToMono(CouponDetail.class).block();
     }
 
 

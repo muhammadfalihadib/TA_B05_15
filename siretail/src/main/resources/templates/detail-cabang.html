@@ -57,8 +57,10 @@
                 <div class="col">
                     <br>
                     <h4 id = "title2">Daftar Item Cabang: </h4>
-                    <a class="btn btn-outline-info" th:href="@{/item/increase/} + ${cabang.id}">Naikkan Stok Item</a>
-                    <a sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')" type="button" class="btn btn-info" th:href="@{/item/add/} + ${cabang.id}">Tambah Item</a>
+                    <div th:if="${cabang.status} == 2">
+                        <a class="btn btn-outline-info" th:href="@{/item/increase/} + ${cabang.id}">Naikkan Stok Item</a>
+                        <a sec:authorize="hasAnyAuthority('Kepala Retail','Manager Cabang')" type="button" class="btn btn-info" th:href="@{/item/add/} + ${cabang.id}">Tambah Item</a>
+                    </div>
                     <br>
                     <div th:if="${errorMsg}">
                         <br>
