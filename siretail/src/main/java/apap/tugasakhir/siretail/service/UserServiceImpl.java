@@ -77,6 +77,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Boolean isValidUsername(String username) {
+        if (userDb.findByUsername(username) != null) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public UserModel getUserById(Integer id) {
         Optional<UserModel> user = userDb.findById(id);
         if (user.isPresent()){

@@ -35,6 +35,9 @@
                     <label>User Name</label>
                     <input type="text" class="form-control" th:field="*{username}" required>
                     <br>
+                    <div>
+                        <p style="color: red" th:text="${usernameMessages}"></p>
+                    </div>
                     <label>Nama</label>
                     <input type="text" class="form-control" th:field="*{nama}" required/>
                     <br>

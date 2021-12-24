@@ -12,6 +12,7 @@ public interface UserService {
     UserModel getUserById(Integer id);
     String encrypt(String password);
     List<String> isValidPassword(String password);
+    Boolean isValidUsername(String username);
     UserModel findByUsername(String username);
     Boolean hasAuthority(String authorityName);
 }
