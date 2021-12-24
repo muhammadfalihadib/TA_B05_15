@@ -35,19 +35,19 @@
                     <input type="hidden" th:field="*{penanggungJawab}"/>
 
                     <label>Nama cabang</label>
-                    <input type="text" class="form-control" th:field="*{nama}"/>
+                    <input type="text" class="form-control" th:field="*{nama}" required/>
                     <br>
 
                     <label>Alamat cabang</label>
-                    <input type="text" class="form-control" th:field="*{alamat}"/>
+                    <input type="text" class="form-control" th:field="*{alamat}" required/>
                     <br>
 
                     <label>No telepon cabang</label>
-                    <input type="text" class="form-control" th:field="*{noTelp}"/>
+                    <input type="text" class="form-control" th:field="*{noTelp}" required/>
                     <br>
 
                     <label>Ukuran cabang (dalam m2)</label>
-                    <input type="text" class="form-control" th:field="*{ukuran}"/>
+                    <input type="text" class="form-control" th:field="*{ukuran}" required/>
                     <br>
 
                     <div th:unless="${error} == null">

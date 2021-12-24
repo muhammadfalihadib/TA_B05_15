@@ -29,16 +29,16 @@
                 <h2 id = "title">Tambah Cabang</h2>
                 <form th:action="@{/cabang/add}" th:object="${cabang}" method="POST">
                     <label>Nama cabang</label>
-                    <input type="text" name="nama" class="form-control"/>
+                    <input type="text" name="nama" class="form-control" required/>
                     <br>
                     <label>Alamat cabang</label>
-                    <input type="text" name="alamat" class="form-control"/>
+                    <input type="text" name="alamat" class="form-control" required/>
                     <br>
                     <label>No telepon cabang</label>
-                    <input type="text" name="noTelp" class="form-control"/>
+                    <input type="text" name="noTelp" class="form-control" required/>
                     <br>
                     <label>Ukuran cabang (dalam m2)</label>
-                    <input type="number" name="ukuran" class="form-control"/>
+                    <input type="number" name="ukuran" class="form-control" required/>
                     <br>
                     <div th:unless="${error} == null">
                         <div class="text-danger" th:text="${error}"></div>
