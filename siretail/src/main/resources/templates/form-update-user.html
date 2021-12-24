@@ -39,7 +39,7 @@
                     <input type="text" class="form-control" th:field="*{nama}" required/>
                     <br>
                     <label>Password</Label>
-                    <input type="password" class="form-control" th:field="*{password} required"/>
+                    <input type="password" class="form-control" th:field="*{password}" required/>
                     <br>
                     <div th:unless="${errorMessages} == null">
                         <div  th:each="error : ${errorMessages}">
@@ -48,7 +48,7 @@
                     </div>
                     <label>Role</label>
                     <div sec:authorize="hasAuthority('Kepala Retail')">
-                        <select class="form-control" th:field="*{role} required">
+                        <select class="form-control" th:field="*{role}" required>
                             <option th:each="role: ${listRole}"
                                     th:value="${role.id}"
                                     th:text="${role.nama}"
