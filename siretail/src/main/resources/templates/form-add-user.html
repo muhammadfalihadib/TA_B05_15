@@ -29,13 +29,13 @@
                 <h2 id = "title">Tambah Pengguna</h2>
                 <form th:action="@{/user/add}" th:object="${user}" method="POST">
                     <label>Username</label>
-                    <input type="text" name="username" class="form-control"/>
+                    <input type="text" name="username" class="form-control required"/>
                     <br>
                     <label>Nama</label>
-                    <input type="text" name="nama" class="form-control"/>
+                    <input type="text" name="nama" class="form-control required"/>
                     <br>
                     <label>Password</Label>
-                    <input type="password" name="password" class="form-control"/>
+                    <input type="password" name="password" class="form-control required"/>
                     <br>
                     <div th:unless="${errorMessages} == null">
                         <div  th:each="error : ${errorMessages}">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <label>Role</label>
-                    <select name="role" class="form-control">
+                    <select name="role" class="form-control required">
                         <option selected value="">--pilih role--</option>
                         <option th:each="role: ${listRole}"
                                 th:value="${role.id}"
