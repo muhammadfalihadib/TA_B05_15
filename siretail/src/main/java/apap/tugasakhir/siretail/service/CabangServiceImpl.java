@@ -3,6 +3,7 @@ package apap.tugasakhir.siretail.service;
 import apap.tugasakhir.siretail.model.CabangModel;
 import apap.tugasakhir.siretail.repository.CabangDb;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -35,7 +36,7 @@ public class CabangServiceImpl implements CabangService {
 
     @Override
     public List<CabangModel> getListCabang(){
-        return cabangDb.findAll();
+        return cabangDb.findAll(Sort.by("id"));
     }
 
     @Override
